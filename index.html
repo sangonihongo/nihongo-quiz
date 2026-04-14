@@ -28,131 +28,84 @@
 }
 
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-html, body {
-  height:100%; overflow:hidden;
-  font-family:'Quicksand','Noto Sans JP',sans-serif;
-  background:var(--bg); color:var(--text);
-}
-
-body {
-  display:flex; flex-direction:column;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-}
-
+html, body { height:100%; overflow:hidden; font-family:'Quicksand','Noto Sans JP',sans-serif; background:var(--bg); color:var(--text); }
+body { display:flex; flex-direction:column; background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%); }
 .scroll-wrap { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-
 .screen { display:none; min-height:100%; padding:20px 16px 40px; }
 .screen.active { display:flex; flex-direction:column; }
 
-/* ===== LOGIN ===== */
+/* LOGIN */
 #login { align-items:center; justify-content:center; gap:24px; text-align:center; }
-
-.login-logo { font-size:56px; text-shadow: 0 0 40px rgba(233,69,96,0.4); animation: float 3s ease-in-out infinite; }
+.login-logo { font-size:56px; text-shadow:0 0 40px rgba(233,69,96,0.4); animation:float 3s ease-in-out infinite; }
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-
-.login-title {
-  font-family:'Noto Sans JP',sans-serif; font-size:26px; font-weight:700;
+.login-title { font-family:'Noto Sans JP',sans-serif; font-size:26px; font-weight:700;
   background:linear-gradient(135deg,var(--accent),var(--gold));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-}
-
-.login-card {
-  background:var(--card); border-radius:var(--radius); padding:28px 22px;
-  width:100%; max-width:340px;
-}
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.login-card { background:var(--card); border-radius:var(--radius); padding:28px 22px; width:100%; max-width:340px; }
 .login-card h3 { font-size:15px; margin-bottom:18px; color:var(--text-dim); font-weight:500; }
-
 .input-group { margin-bottom:14px; text-align:left; }
 .input-group label { font-size:12px; color:var(--text-dim); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px; }
-.input-group input {
-  width:100%; padding:14px 16px; border-radius:12px;
-  border:2px solid var(--border); background:var(--surface); color:var(--text);
-  font-size:16px; font-family:inherit; outline:none; transition:border .2s;
-}
+.input-group input { width:100%; padding:14px 16px; border-radius:12px; border:2px solid var(--border); background:var(--surface); color:var(--text); font-size:16px; font-family:inherit; outline:none; transition:border .2s; }
 .input-group input:focus { border-color:var(--accent); }
 .input-group input::placeholder { color:var(--text-dark); }
-
-.login-btn {
-  width:100%; padding:15px; margin-top:6px;
-  background:linear-gradient(135deg,var(--accent),#c0392b);
-  border:none; border-radius:var(--radius); color:#fff;
-  font-size:16px; font-weight:700; cursor:pointer; font-family:inherit;
-  box-shadow:0 4px 20px rgba(233,69,96,0.4); transition:all .2s;
-}
+.login-btn { width:100%; padding:15px; margin-top:6px; background:linear-gradient(135deg,var(--accent),#c0392b); border:none; border-radius:var(--radius); color:#fff; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 4px 20px rgba(233,69,96,0.4); transition:all .2s; }
 .login-btn:active { transform:scale(0.97); }
 .login-btn:disabled { opacity:0.5; }
-
 .login-hint { font-size:11px; color:var(--text-dark); margin-top:8px; }
 .login-error { font-size:13px; color:var(--red); margin-top:8px; min-height:20px; }
 
-/* ===== HOME ===== */
-#home { align-items:center; justify-content:center; gap:24px; text-align:center; }
-
-.user-bar {
-  display:flex; align-items:center; justify-content:space-between;
-  width:100%; max-width:340px; padding:10px 16px;
-  background:var(--card); border-radius:12px;
-}
+/* HOME */
+#home { align-items:center; gap:20px; text-align:center; padding-top:16px; }
+.user-bar { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:340px; padding:10px 16px; background:var(--card); border-radius:12px; }
 .user-name { font-size:14px; font-weight:700; }
 .user-name span { color:var(--gold); }
-.logout-btn {
-  background:none; border:1px solid var(--border); border-radius:8px;
-  color:var(--text-dim); padding:6px 14px; font-size:12px; cursor:pointer; font-family:inherit;
-}
-
-.home-logo { font-size:52px; text-shadow:0 0 40px rgba(233,69,96,0.4); animation:float 3s ease-in-out infinite; }
-.home-title { font-family:'Noto Sans JP',sans-serif; font-size:24px; font-weight:700;
+.logout-btn { background:none; border:1px solid var(--border); border-radius:8px; color:var(--text-dim); padding:6px 14px; font-size:12px; cursor:pointer; font-family:inherit; }
+.home-logo { font-size:44px; text-shadow:0 0 40px rgba(233,69,96,0.4); animation:float 3s ease-in-out infinite; }
+.home-title { font-family:'Noto Sans JP',sans-serif; font-size:22px; font-weight:700;
   background:linear-gradient(135deg,var(--accent),var(--gold));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
 .home-sub { color:var(--text-dim); font-size:13px; font-weight:500; }
 
-.stats-bar {
-  display:flex; gap:12px; justify-content:center;
-  background:var(--card); border-radius:12px; padding:14px 20px;
-  width:100%; max-width:340px;
-}
+.stats-bar { display:flex; gap:12px; justify-content:center; background:var(--card); border-radius:12px; padding:14px 20px; width:100%; max-width:340px; }
 .stat-item { text-align:center; flex:1; }
-.stat-val { font-size:22px; font-weight:700; color:var(--gold); }
+.stat-val { font-size:20px; font-weight:700; color:var(--gold); }
 .stat-label { font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px; }
 
-.mode-grid { display:flex; flex-direction:column; gap:12px; width:100%; max-width:340px; }
-.mode-btn {
-  position:relative; overflow:hidden;
-  background:var(--card); border:1px solid var(--border);
-  border-radius:var(--radius); padding:16px 20px;
-  text-align:left; cursor:pointer; transition:all .2s;
-  -webkit-user-select:none; user-select:none;
-}
+.mode-grid { display:flex; flex-direction:column; gap:10px; width:100%; max-width:340px; }
+.mode-btn { position:relative; overflow:hidden; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 20px; text-align:left; cursor:pointer; transition:all .2s; -webkit-user-select:none; user-select:none; }
 .mode-btn:active { transform:scale(0.97); background:var(--card-hover); }
-.mode-btn .mode-icon { font-size:24px; margin-bottom:4px; }
-.mode-btn .mode-title { font-size:15px; font-weight:700; color:var(--text); }
-.mode-btn .mode-desc { font-size:11px; color:var(--text-dim); margin-top:2px; }
-.mode-btn::after {
-  content:''; position:absolute; right:16px; top:50%;
-  width:8px; height:8px;
-  border-right:2px solid var(--text-dim); border-bottom:2px solid var(--text-dim);
-  transform:translateY(-50%) rotate(-45deg);
-}
+.mode-btn .mode-icon { font-size:22px; margin-bottom:2px; }
+.mode-btn .mode-title { font-size:14px; font-weight:700; }
+.mode-btn .mode-desc { font-size:11px; color:var(--text-dim); margin-top:1px; }
+.mode-btn::after { content:''; position:absolute; right:16px; top:50%; width:8px; height:8px; border-right:2px solid var(--text-dim); border-bottom:2px solid var(--text-dim); transform:translateY(-50%) rotate(-45deg); }
 
-/* ===== LEADERBOARD ===== */
-.lb-toggle {
-  background:var(--card); border:1px solid var(--border); border-radius:10px;
-  color:var(--gold); padding:10px 24px; font-size:13px; cursor:pointer;
-  font-family:inherit; font-weight:600; width:100%; max-width:340px;
-}
-.lb-toggle:active { background:var(--card-hover); }
+/* Bottom buttons row */
+.home-btns { display:flex; gap:10px; width:100%; max-width:340px; }
+.home-btns button { flex:1; background:var(--card); border:1px solid var(--border); border-radius:10px; color:var(--gold); padding:10px; font-size:12px; cursor:pointer; font-family:inherit; font-weight:600; }
+.home-btns button:active { background:var(--card-hover); }
 
-.leaderboard {
-  background:var(--card); border-radius:var(--radius); padding:16px;
-  width:100%; max-width:340px; display:none;
-}
+/* HISTORY PANEL */
+.history-panel { background:var(--card); border-radius:var(--radius); padding:16px; width:100%; max-width:340px; display:none; }
+.history-panel.open { display:block; }
+.history-panel h3 { font-size:14px; color:var(--gold); margin-bottom:12px; text-align:center; }
+.hist-item { padding:10px 0; border-bottom:1px solid var(--border); }
+.hist-item:last-child { border:none; }
+.hist-top { display:flex; justify-content:space-between; align-items:center; }
+.hist-date { font-size:11px; color:var(--text-dim); }
+.hist-mode { font-size:11px; color:var(--accent); font-weight:600; }
+.hist-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:4px; }
+.hist-score { font-size:16px; font-weight:700; }
+.hist-score.great { color:var(--green); }
+.hist-score.ok { color:var(--gold); }
+.hist-score.bad { color:var(--red); }
+.hist-pct { font-size:13px; color:var(--text-dim); }
+.hist-empty { text-align:center; color:var(--text-dim); font-size:13px; padding:16px 0; }
+
+/* LEADERBOARD */
+.leaderboard { background:var(--card); border-radius:var(--radius); padding:16px; width:100%; max-width:340px; display:none; }
 .leaderboard.open { display:block; }
 .leaderboard h3 { font-size:14px; color:var(--gold); margin-bottom:12px; text-align:center; }
-.lb-row {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:8px 0; border-bottom:1px solid var(--border); font-size:13px;
-}
+.lb-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px; }
 .lb-row:last-child { border:none; }
 .lb-rank { width:28px; font-weight:700; color:var(--text-dim); }
 .lb-user { flex:1; font-weight:600; }
@@ -160,39 +113,22 @@ body {
 .lb-row.me { color:var(--gold); }
 .lb-row.me .lb-rank { color:var(--gold); }
 
-/* ===== SETTINGS ===== */
+/* SETTINGS */
 #settings { align-items:center; justify-content:center; gap:20px; }
-.settings-card {
-  background:var(--card); border-radius:var(--radius); padding:24px 20px;
-  width:100%; max-width:360px;
-}
+.settings-card { background:var(--card); border-radius:var(--radius); padding:24px 20px; width:100%; max-width:360px; }
 .settings-card h2 { font-size:18px; margin-bottom:16px; text-align:center; }
-.setting-row {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:12px 0; border-bottom:1px solid var(--border);
-}
+.setting-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border); }
 .setting-row:last-child { border:none; }
 .setting-label { font-size:14px; font-weight:600; }
 .count-selector { display:flex; align-items:center; gap:12px; }
-.count-btn {
-  width:36px; height:36px; border-radius:50%;
-  background:var(--accent2); border:none; color:var(--text);
-  font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  font-family:inherit; font-weight:700;
-}
+.count-btn { width:36px; height:36px; border-radius:50%; background:var(--accent2); border:none; color:var(--text); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:inherit; font-weight:700; }
 .count-btn:active { background:var(--accent); }
 .count-val { font-size:20px; font-weight:700; min-width:36px; text-align:center; }
-.start-btn {
-  width:100%; max-width:360px; padding:16px;
-  background:linear-gradient(135deg,var(--accent),#c0392b);
-  border:none; border-radius:var(--radius); color:#fff;
-  font-size:17px; font-weight:700; cursor:pointer; font-family:inherit;
-  box-shadow:0 4px 20px rgba(233,69,96,0.4); transition:all .2s;
-}
+.start-btn { width:100%; max-width:360px; padding:16px; background:linear-gradient(135deg,var(--accent),#c0392b); border:none; border-radius:var(--radius); color:#fff; font-size:17px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 4px 20px rgba(233,69,96,0.4); transition:all .2s; }
 .start-btn:active { transform:scale(0.97); }
 .back-link { background:none; border:none; color:var(--text-dim); font-size:14px; cursor:pointer; font-family:inherit; padding:8px; }
 
-/* ===== QUIZ ===== */
+/* QUIZ */
 #quiz { gap:16px; }
 .quiz-header { display:flex; align-items:center; justify-content:space-between; padding:4px 0; }
 .quiz-back { background:none; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; padding:4px 8px; }
@@ -200,87 +136,49 @@ body {
 .quiz-score { font-size:13px; color:var(--green); font-weight:700; }
 .progress-track { height:6px; background:var(--card); border-radius:3px; overflow:hidden; }
 .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--gold)); border-radius:3px; transition:width .4s ease; }
-
-.question-card {
-  background:var(--card); border-radius:20px; padding:32px 20px;
-  text-align:center; min-height:170px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  box-shadow:var(--shadow); position:relative; overflow:hidden;
-}
-.question-card::before {
-  content:''; position:absolute; top:-40px; right:-40px;
-  width:120px; height:120px; border-radius:50%; background:rgba(233,69,96,0.08);
-}
-.q-type-badge {
-  font-size:11px; color:var(--text-dim); font-weight:600;
-  text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;
-  background:var(--accent2); padding:4px 12px; border-radius:20px;
-}
+.question-card { background:var(--card); border-radius:20px; padding:32px 20px; text-align:center; min-height:170px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+.question-card::before { content:''; position:absolute; top:-40px; right:-40px; width:120px; height:120px; border-radius:50%; background:rgba(233,69,96,0.08); }
+.q-type-badge { font-size:11px; color:var(--text-dim); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; background:var(--accent2); padding:4px 12px; border-radius:20px; }
 .q-main { font-size:48px; font-weight:700; line-height:1.3; font-family:'Noto Sans JP',sans-serif; margin:8px 0; }
 .q-main.turkish-q { font-size:24px; font-family:'Quicksand',sans-serif; }
 .q-hint { font-size:13px; color:var(--text-dim); margin-top:8px; }
-
 .options { display:flex; flex-direction:column; gap:12px; margin-top:8px; }
-.opt-btn {
-  background:var(--card); border:2px solid var(--border);
-  border-radius:14px; padding:16px 20px;
-  font-size:16px; font-weight:600; color:var(--text);
-  cursor:pointer; text-align:center;
-  font-family:'Quicksand','Noto Sans JP',sans-serif;
-  transition:all .15s; -webkit-user-select:none; user-select:none;
-  min-height:52px; display:flex; align-items:center; justify-content:center;
-}
+.opt-btn { background:var(--card); border:2px solid var(--border); border-radius:14px; padding:16px 20px; font-size:16px; font-weight:600; color:var(--text); cursor:pointer; text-align:center; font-family:'Quicksand','Noto Sans JP',sans-serif; transition:all .15s; -webkit-user-select:none; user-select:none; min-height:52px; display:flex; align-items:center; justify-content:center; }
 .opt-btn:active:not(.locked) { transform:scale(0.97); }
 .opt-btn.locked { pointer-events:none; }
 .opt-btn.correct { background:rgba(0,200,83,0.15); border-color:var(--green); color:var(--green); animation:pop .3s ease; }
 .opt-btn.wrong { background:rgba(255,23,68,0.12); border-color:var(--red); color:var(--red); }
 @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.03);} 100%{transform:scale(1);} }
-
 .feedback-bar { text-align:center; padding:12px; border-radius:12px; font-size:14px; font-weight:700; animation:slideUp .25s ease; }
 @keyframes slideUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
 .feedback-bar.ok { background:rgba(0,200,83,0.12); color:var(--green); }
 .feedback-bar.fail { background:rgba(255,23,68,0.1); color:var(--red); }
 
-/* ===== RESULT ===== */
+/* RESULT */
 #result { align-items:center; justify-content:center; gap:20px; text-align:center; }
-.result-circle {
-  width:140px; height:140px; border-radius:50%;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  font-size:42px; font-weight:700; border:4px solid;
-}
+.result-circle { width:140px; height:140px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:42px; font-weight:700; border:4px solid; }
 .result-circle.great { border-color:var(--green); color:var(--green); background:rgba(0,200,83,0.08); }
 .result-circle.ok { border-color:var(--gold); color:var(--gold); background:rgba(245,197,24,0.08); }
 .result-circle.bad { border-color:var(--red); color:var(--red); background:rgba(255,23,68,0.08); }
 .result-circle small { font-size:13px; color:var(--text-dim); font-weight:600; }
 .result-msg { font-size:20px; font-weight:700; }
-
-.wrong-list {
-  background:var(--card); border-radius:var(--radius); padding:16px;
-  width:100%; max-width:360px; text-align:left; max-height:240px; overflow-y:auto;
-}
+.wrong-list { background:var(--card); border-radius:var(--radius); padding:16px; width:100%; max-width:360px; text-align:left; max-height:240px; overflow-y:auto; }
 .wrong-list h3 { font-size:14px; color:var(--accent); margin-bottom:10px; }
 .wrong-item { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px; }
 .wrong-item:last-child { border:none; }
 .wrong-jp { font-family:'Noto Sans JP',sans-serif; font-weight:600; font-size:18px; }
 .wrong-ans { color:var(--text-dim); text-align:right; }
-
 .result-actions { display:flex; gap:12px; width:100%; max-width:360px; }
-.result-actions button {
-  flex:1; padding:14px; border-radius:var(--radius);
-  font-size:15px; font-weight:700; cursor:pointer;
-  font-family:inherit; border:none; transition:all .2s;
-}
+.result-actions button { flex:1; padding:14px; border-radius:var(--radius); font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; border:none; transition:all .2s; }
 .result-actions button:active { transform:scale(0.97); }
 .btn-retry { background:var(--accent); color:#fff; }
 .btn-home { background:var(--card); color:var(--text); border:1px solid var(--border)!important; }
 
-/* Loading spinner */
 .spinner { display:inline-block; width:20px; height:20px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; }
 @keyframes spin { to{transform:rotate(360deg);} }
 </style>
 </head>
 <body>
-
 <div class="scroll-wrap">
 
 <!-- LOGIN -->
@@ -312,46 +210,33 @@ body {
     <div class="user-name">Hoş geldin, <span id="dispUser"></span></div>
     <button class="logout-btn" onclick="doLogout()">Çıkış</button>
   </div>
-
   <div class="home-logo">鳥居</div>
   <div>
     <div class="home-title">日本語クイズ</div>
     <div class="home-sub">157 Kelime</div>
   </div>
-
   <div class="stats-bar">
-    <div class="stat-item"><div class="stat-val" id="totalPlayed">0</div><div class="stat-label">Oynanan</div></div>
+    <div class="stat-item"><div class="stat-val" id="totalGames">0</div><div class="stat-label">Oyun</div></div>
     <div class="stat-item"><div class="stat-val" id="totalCorrect">0</div><div class="stat-label">Doğru</div></div>
     <div class="stat-item"><div class="stat-val" id="totalRate">—</div><div class="stat-label">Başarı %</div></div>
   </div>
-
   <div class="mode-grid">
-    <div class="mode-btn" onclick="selectMode('hiragana2romaji')">
-      <div class="mode-icon">あ → abc</div>
-      <div class="mode-title">Hiragana → Romaji</div>
-      <div class="mode-desc">Hiragana'yı gör, doğru okunuşu seç</div>
-    </div>
-    <div class="mode-btn" onclick="selectMode('hiragana2turkish')">
-      <div class="mode-icon">あ → TR</div>
-      <div class="mode-title">Hiragana → Türkçe</div>
-      <div class="mode-desc">Hiragana'yı gör, Türkçe anlamını seç</div>
-    </div>
-    <div class="mode-btn" onclick="selectMode('turkish2pair')">
-      <div class="mode-icon">TR → あ+abc</div>
-      <div class="mode-title">Türkçe → Romaji + Hiragana</div>
-      <div class="mode-desc">Türkçe anlamı gör, doğru çifti seç</div>
-    </div>
-    <div class="mode-btn" onclick="selectMode('mixed')">
-      <div class="mode-icon">🎲 Karışık</div>
-      <div class="mode-title">Karışık Mod</div>
-      <div class="mode-desc">Her üç tip rastgele karışık gelir</div>
-    </div>
+    <div class="mode-btn" onclick="selectMode('hiragana2romaji')"><div class="mode-icon">あ → abc</div><div class="mode-title">Hiragana → Romaji</div><div class="mode-desc">Hiragana'yı gör, doğru okunuşu seç</div></div>
+    <div class="mode-btn" onclick="selectMode('hiragana2turkish')"><div class="mode-icon">あ → TR</div><div class="mode-title">Hiragana → Türkçe</div><div class="mode-desc">Hiragana'yı gör, Türkçe anlamını seç</div></div>
+    <div class="mode-btn" onclick="selectMode('turkish2pair')"><div class="mode-icon">TR → あ+abc</div><div class="mode-title">Türkçe → Romaji + Hiragana</div><div class="mode-desc">Türkçe anlamı gör, doğru çifti seç</div></div>
+    <div class="mode-btn" onclick="selectMode('mixed')"><div class="mode-icon">🎲 Karışık</div><div class="mode-title">Karışık Mod</div><div class="mode-desc">Her üç tip rastgele karışık gelir</div></div>
   </div>
-
-  <button class="lb-toggle" onclick="toggleLeaderboard()">🏆 Sıralama Tablosu</button>
+  <div class="home-btns">
+    <button onclick="toggleHistory()">📋 Oyun Geçmişi</button>
+    <button onclick="toggleLeaderboard()">🏆 Sıralama</button>
+  </div>
+  <div class="history-panel" id="historyPanel">
+    <h3>📋 Oyun Geçmişi</h3>
+    <div id="histContent"></div>
+  </div>
   <div class="leaderboard" id="leaderboard">
     <h3>🏆 En İyiler</h3>
-    <div id="lbContent"><div class="spinner" style="margin:20px auto;display:block;"></div></div>
+    <div id="lbContent"></div>
   </div>
 </div>
 
@@ -359,20 +244,8 @@ body {
 <div id="settings" class="screen">
   <div class="settings-card">
     <h2 id="settingsTitle">Ayarlar</h2>
-    <div class="setting-row">
-      <span class="setting-label">Soru Sayısı</span>
-      <div class="count-selector">
-        <button class="count-btn" onclick="adjustCount(-5)">−</button>
-        <span class="count-val" id="qCount">20</span>
-        <button class="count-btn" onclick="adjustCount(5)">+</button>
-      </div>
-    </div>
-    <div class="setting-row">
-      <span class="setting-label">Yanlışları Tekrarla</span>
-      <div class="count-selector">
-        <button class="count-btn" id="repeatToggle" onclick="toggleRepeat()" style="width:auto;padding:0 14px;border-radius:10px;font-size:14px;">EVET</button>
-      </div>
-    </div>
+    <div class="setting-row"><span class="setting-label">Soru Sayısı</span><div class="count-selector"><button class="count-btn" onclick="adjustCount(-5)">−</button><span class="count-val" id="qCount">20</span><button class="count-btn" onclick="adjustCount(5)">+</button></div></div>
+    <div class="setting-row"><span class="setting-label">Yanlışları Tekrarla</span><div class="count-selector"><button class="count-btn" id="repeatToggle" onclick="toggleRepeat()" style="width:auto;padding:0 14px;border-radius:10px;font-size:14px;">EVET</button></div></div>
   </div>
   <button class="start-btn" onclick="startQuiz()">Başla</button>
   <button class="back-link" onclick="showScreen('home')">← Geri</button>
@@ -404,25 +277,21 @@ body {
 
 </div>
 
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
 <script>
-// ===== FIREBASE INIT =====
-const firebaseConfig = {
-  apiKey: "AIzaSyBYKN1MNRADwtVSysJj8g5B4HOKkmuS6oo",
-  authDomain: "nihongo-quiz-decf9.firebaseapp.com",
-  databaseURL: "https://nihongo-quiz-decf9-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "nihongo-quiz-decf9",
-  storageBucket: "nihongo-quiz-decf9.firebasestorage.app",
-  messagingSenderId: "851056698850",
-  appId: "1:851056698850:web:5cdfd0380b37b184bd45bb"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+firebase.initializeApp({
+  apiKey:"AIzaSyBYKN1MNRADwtVSysJj8g5B4HOKkmuS6oo",
+  authDomain:"nihongo-quiz-decf9.firebaseapp.com",
+  databaseURL:"https://nihongo-quiz-decf9-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"nihongo-quiz-decf9",
+  storageBucket:"nihongo-quiz-decf9.firebasestorage.app",
+  messagingSenderId:"851056698850",
+  appId:"1:851056698850:web:5cdfd0380b37b184bd45bb"
+});
+const db=firebase.database();
 
-// ===== WORD DATA =====
 const WORDS=[
 {no:1,jp:"あおい",rm:"aoi",tr:"mavi"},{no:2,jp:"うえ",rm:"ue",tr:"yukarı"},{no:3,jp:"え",rm:"e",tr:"resim"},
 {no:4,jp:"あき",rm:"aki",tr:"sonbahar"},{no:5,jp:"かき",rm:"kaki",tr:"cennet hurması/ istiridye"},
@@ -506,70 +375,65 @@ const WORDS=[
 {no:157,jp:"かいきん　てあて",rm:"kaikin teate",tr:"devam primi"}
 ];
 
-// ===== STATE =====
+// STATE
 let currentUser=null, currentMode='', questionCount=20, repeatWrong=true;
-let questions=[], qIndex=0, score=0, wrongs=[];
-let locked=false;
+let questions=[], qIndex=0, score=0, wrongs=[], locked=false;
 
-// ===== SIMPLE HASH FOR PIN =====
+const MODE_NAMES={hiragana2romaji:'あ→Romaji',hiragana2turkish:'あ→Türkçe',turkish2pair:'TR→あ+abc',mixed:'Karışık'};
+
+// PIN HASH
 function hashPin(pin){
-  let h=0;
-  const s=pin+'nihongo_salt_2026';
+  let h=0; const s=pin+'nihongo_salt_2026';
   for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}
   return 'h'+Math.abs(h).toString(36);
 }
 
-// ===== AUTH =====
+// AUTH
 async function doLogin(){
   const user=document.getElementById('inpUser').value.trim().toLowerCase();
   const pin=document.getElementById('inpPin').value.trim();
   const errEl=document.getElementById('loginError');
   errEl.textContent='';
-
   if(!user||user.length<2){errEl.textContent='Kullanıcı adı en az 2 karakter olmalı.';return;}
   if(!/^\d{4}$/.test(pin)){errEl.textContent='PIN 4 haneli rakam olmalı.';return;}
 
   const btn=document.getElementById('btnLogin');
   btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
-
   const safeUser=user.replace(/[.#$\[\]\/]/g,'_');
   const pinHash=hashPin(pin);
 
   try{
-    const snap=await db.ref('users/'+safeUser).once('value');
+    const snap=await db.ref('users/'+safeUser+'/profile').once('value');
     if(snap.exists()){
-      // Existing user — check PIN
-      const data=snap.val();
-      if(data.pin!==pinHash){
-        errEl.textContent='PIN yanlış. Tekrar deneyin.';
-        btn.disabled=false; btn.textContent='Giriş / Kayıt'; return;
+      if(snap.val().pin!==pinHash){
+        errEl.textContent='PIN yanlış.'; btn.disabled=false; btn.textContent='Giriş / Kayıt'; return;
       }
-      currentUser={name:safeUser, ...data};
     } else {
-      // New user — create
-      const newData={pin:pinHash, played:0, correct:0, created:Date.now()};
-      await db.ref('users/'+safeUser).set(newData);
-      currentUser={name:safeUser, ...newData};
+      await db.ref('users/'+safeUser+'/profile').set({pin:pinHash,created:Date.now()});
     }
-
+    currentUser={name:safeUser};
     localStorage.setItem('nihongo_user',safeUser);
     localStorage.setItem('nihongo_pin',pin);
     btn.disabled=false; btn.textContent='Giriş / Kayıt';
+    await loadUserStats();
     enterHome();
   }catch(e){
-    errEl.textContent='Bağlantı hatası. İnternet bağlantınızı kontrol edin.';
-    btn.disabled=false; btn.textContent='Giriş / Kayıt';
-    console.error(e);
+    errEl.textContent='Bağlantı hatası.'; btn.disabled=false; btn.textContent='Giriş / Kayıt';
   }
 }
 
 function doLogout(){
-  localStorage.removeItem('nihongo_user');
-  localStorage.removeItem('nihongo_pin');
+  localStorage.removeItem('nihongo_user'); localStorage.removeItem('nihongo_pin');
   currentUser=null;
-  document.getElementById('inpUser').value='';
-  document.getElementById('inpPin').value='';
+  document.getElementById('inpUser').value=''; document.getElementById('inpPin').value='';
   showScreen('login');
+}
+
+async function tryAutoLogin(){
+  const u=localStorage.getItem('nihongo_user'), p=localStorage.getItem('nihongo_pin');
+  if(!u||!p) return;
+  document.getElementById('inpUser').value=u; document.getElementById('inpPin').value=p;
+  await doLogin();
 }
 
 function enterHome(){
@@ -578,41 +442,88 @@ function enterHome(){
   showScreen('home');
 }
 
-// ===== AUTO LOGIN =====
-async function tryAutoLogin(){
-  const u=localStorage.getItem('nihongo_user');
-  const p=localStorage.getItem('nihongo_pin');
-  if(!u||!p) return;
-  document.getElementById('inpUser').value=u;
-  document.getElementById('inpPin').value=p;
-  await doLogin();
+// STATS — computed from games list
+async function loadUserStats(){
+  if(!currentUser) return;
+  try{
+    const snap=await db.ref('users/'+currentUser.name+'/games').orderByChild('time').limitToLast(50).once('value');
+    const games=[];
+    snap.forEach(c=>{ games.push({id:c.key,...c.val()}); });
+    games.sort((a,b)=>b.time-a.time);
+    currentUser.games=games;
+
+    let totalPlayed=0, totalCorrect=0;
+    games.forEach(g=>{ totalPlayed+=g.total; totalCorrect+=g.correct; });
+    currentUser.totalGames=games.length;
+    currentUser.totalPlayed=totalPlayed;
+    currentUser.totalCorrect=totalCorrect;
+  }catch(e){
+    currentUser.games=[]; currentUser.totalGames=0; currentUser.totalPlayed=0; currentUser.totalCorrect=0;
+  }
 }
 
-// ===== STATS =====
 function updateStatsUI(){
   if(!currentUser) return;
-  document.getElementById('totalPlayed').textContent=currentUser.played||0;
-  document.getElementById('totalCorrect').textContent=currentUser.correct||0;
-  const p=currentUser.played||0, c=currentUser.correct||0;
+  document.getElementById('totalGames').textContent=currentUser.totalGames||0;
+  document.getElementById('totalCorrect').textContent=currentUser.totalCorrect||0;
+  const p=currentUser.totalPlayed||0, c=currentUser.totalCorrect||0;
   document.getElementById('totalRate').textContent=p?Math.round(c/p*100)+'%':'—';
 }
 
-async function saveScore(played, correct){
+// SAVE GAME
+async function saveGame(mode, total, correct, wrongWords){
   if(!currentUser) return;
-  currentUser.played=(currentUser.played||0)+played;
-  currentUser.correct=(currentUser.correct||0)+correct;
+  const game={
+    mode:mode,
+    total:total,
+    correct:correct,
+    wrong:wrongWords.map(w=>w.no),
+    pct:Math.round(correct/total*100),
+    time:Date.now()
+  };
   try{
-    await db.ref('users/'+currentUser.name).update({
-      played:currentUser.played,
-      correct:currentUser.correct,
+    await db.ref('users/'+currentUser.name+'/games').push(game);
+    // Update summary for leaderboard
+    await loadUserStats();
+    await db.ref('users/'+currentUser.name+'/summary').set({
+      totalGames:currentUser.totalGames,
+      totalPlayed:currentUser.totalPlayed,
+      totalCorrect:currentUser.totalCorrect,
       lastPlay:Date.now()
     });
-  }catch(e){console.error('Save error:',e);}
+  }catch(e){console.error(e);}
 }
 
-// ===== LEADERBOARD =====
+// HISTORY
+function toggleHistory(){
+  const p=document.getElementById('historyPanel');
+  document.getElementById('leaderboard').classList.remove('open');
+  const isOpen=p.classList.toggle('open');
+  if(isOpen) renderHistory();
+}
+
+function renderHistory(){
+  const cont=document.getElementById('histContent');
+  const games=currentUser?.games||[];
+  if(!games.length){cont.innerHTML='<div class="hist-empty">Henüz oyun yok</div>';return;}
+
+  cont.innerHTML=games.map(g=>{
+    const d=new Date(g.time);
+    const dateStr=d.toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'});
+    const timeStr=d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+    const cls=g.pct>=80?'great':g.pct>=50?'ok':'bad';
+    const modeName=MODE_NAMES[g.mode]||g.mode;
+    return `<div class="hist-item">
+      <div class="hist-top"><span class="hist-date">${dateStr} ${timeStr}</span><span class="hist-mode">${modeName}</span></div>
+      <div class="hist-bottom"><span class="hist-score ${cls}">${g.correct}/${g.total}</span><span class="hist-pct">%${g.pct}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// LEADERBOARD
 function toggleLeaderboard(){
   const lb=document.getElementById('leaderboard');
+  document.getElementById('historyPanel').classList.remove('open');
   const isOpen=lb.classList.toggle('open');
   if(isOpen) loadLeaderboard();
 }
@@ -621,32 +532,27 @@ async function loadLeaderboard(){
   const cont=document.getElementById('lbContent');
   cont.innerHTML='<div style="text-align:center"><span class="spinner"></span></div>';
   try{
-    const snap=await db.ref('users').orderByChild('correct').limitToLast(20).once('value');
+    const snap=await db.ref('users').once('value');
     const users=[];
     snap.forEach(c=>{
-      const d=c.val();
-      if(d.played>0) users.push({name:c.key, played:d.played, correct:d.correct, rate:Math.round(d.correct/d.played*100)});
+      const s=c.child('summary').val();
+      if(s&&s.totalPlayed>0) users.push({name:c.key,played:s.totalPlayed,correct:s.totalCorrect,games:s.totalGames,rate:Math.round(s.totalCorrect/s.totalPlayed*100)});
     });
     users.sort((a,b)=>b.rate-a.rate||(b.correct-a.correct));
-
     if(!users.length){cont.innerHTML='<div style="text-align:center;color:var(--text-dim);">Henüz kimse oynamamış</div>';return;}
-
+    const medals=['🥇','🥈','🥉'];
     cont.innerHTML=users.map((u,i)=>{
-      const medals=['🥇','🥈','🥉'];
-      const rank=medals[i]||(i+1);
       const isMe=currentUser&&u.name===currentUser.name;
       return `<div class="lb-row ${isMe?'me':''}">
-        <span class="lb-rank">${rank}</span>
+        <span class="lb-rank">${medals[i]||(i+1)}</span>
         <span class="lb-user">${u.name}</span>
-        <span class="lb-score">${u.rate}% (${u.correct}/${u.played})</span>
+        <span class="lb-score">${u.rate}% (${u.games} oyun)</span>
       </div>`;
     }).join('');
-  }catch(e){
-    cont.innerHTML='<div style="color:var(--red);text-align:center;">Yüklenemedi</div>';
-  }
+  }catch(e){cont.innerHTML='<div style="color:var(--red);text-align:center;">Yüklenemedi</div>';}
 }
 
-// ===== NAVIGATION =====
+// NAVIGATION
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -654,136 +560,95 @@ function showScreen(id){
   if(id==='home') updateStatsUI();
 }
 
-// ===== MODE SELECT =====
 function selectMode(mode){
   currentMode=mode;
-  const titles={hiragana2romaji:'あ → Romaji',hiragana2turkish:'あ → Türkçe',turkish2pair:'TR → あ+abc',mixed:'🎲 Karışık'};
-  document.getElementById('settingsTitle').textContent=titles[mode]||'Ayarlar';
+  document.getElementById('settingsTitle').textContent=MODE_NAMES[mode]||'Ayarlar';
   showScreen('settings');
 }
+function adjustCount(d){ questionCount=Math.max(5,Math.min(157,questionCount+d)); document.getElementById('qCount').textContent=questionCount; }
+function toggleRepeat(){ repeatWrong=!repeatWrong; document.getElementById('repeatToggle').textContent=repeatWrong?'EVET':'HAYIR'; }
 
-function adjustCount(d){
-  questionCount=Math.max(5,Math.min(157,questionCount+d));
-  document.getElementById('qCount').textContent=questionCount;
-}
-function toggleRepeat(){
-  repeatWrong=!repeatWrong;
-  document.getElementById('repeatToggle').textContent=repeatWrong?'EVET':'HAYIR';
-}
+// HELPERS
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function pickDistractors(correct,field,count){ return shuffle(WORDS.filter(w=>w[field]!==correct[field])).slice(0,count); }
 
-// ===== HELPERS =====
-function shuffle(arr){
-  const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a;
-}
-
-function pickDistractors(correct, field, count){
-  const pool=WORDS.filter(w=>w[field]!==correct[field]);
-  return shuffle(pool).slice(0,count);
-}
-
-// ===== QUESTION GENERATION =====
-function generateQuestion(word, mode){
+function generateQuestion(word,mode){
   if(mode==='mixed') mode=['hiragana2romaji','hiragana2turkish','turkish2pair'][Math.floor(Math.random()*3)];
-
   if(mode==='hiragana2romaji'){
-    const distractors=pickDistractors(word,'rm',3);
-    const opts=shuffle([{text:word.rm,correct:true},...distractors.map(d=>({text:d.rm,correct:false}))]);
-    return {type:'Hiragana → Romaji',display:word.jp,displayClass:'',hint:'Doğru okunuşu seçin',options:opts,word:word};
+    const d=pickDistractors(word,'rm',3);
+    return {type:'Hiragana → Romaji',display:word.jp,displayClass:'',hint:'Doğru okunuşu seçin',
+      options:shuffle([{text:word.rm,correct:true},...d.map(x=>({text:x.rm,correct:false}))]),word};
   }
   if(mode==='hiragana2turkish'){
-    const distractors=pickDistractors(word,'tr',3);
-    const opts=shuffle([{text:word.tr,correct:true},...distractors.map(d=>({text:d.tr,correct:false}))]);
-    return {type:'Hiragana → Türkçe',display:word.jp,displayClass:'',hint:'Türkçe anlamını seçin',options:opts,word:word};
+    const d=pickDistractors(word,'tr',3);
+    return {type:'Hiragana → Türkçe',display:word.jp,displayClass:'',hint:'Türkçe anlamını seçin',
+      options:shuffle([{text:word.tr,correct:true},...d.map(x=>({text:x.tr,correct:false}))]),word};
   }
   if(mode==='turkish2pair'){
-    const distractors=pickDistractors(word,'rm',3);
-    const opts=shuffle([{text:word.rm+' — '+word.jp,correct:true},...distractors.map(d=>({text:d.rm+' — '+d.jp,correct:false}))]);
-    return {type:'Türkçe → Romaji + Hiragana',display:word.tr,displayClass:'turkish-q',hint:'Doğru çifti seçin',options:opts,word:word};
+    const d=pickDistractors(word,'rm',3);
+    return {type:'Türkçe → Romaji + Hiragana',display:word.tr,displayClass:'turkish-q',hint:'Doğru çifti seçin',
+      options:shuffle([{text:word.rm+' — '+word.jp,correct:true},...d.map(x=>({text:x.rm+' — '+x.jp,correct:false}))]),word};
   }
 }
 
-// ===== START QUIZ =====
+// QUIZ
 function startQuiz(){
   const pool=shuffle(WORDS).slice(0,Math.min(questionCount,WORDS.length));
   questions=pool.map(w=>generateQuestion(w,currentMode));
   qIndex=0; score=0; wrongs=[]; locked=false;
-  showScreen('quiz');
-  renderQuestion();
+  showScreen('quiz'); renderQuestion();
 }
 
 function renderQuestion(){
   if(qIndex>=questions.length){endQuiz();return;}
-  const q=questions[qIndex];
-  locked=false;
+  const q=questions[qIndex]; locked=false;
   document.getElementById('qProgress').textContent=(qIndex+1)+' / '+questions.length;
   document.getElementById('qScore').textContent=score+' ✓';
   document.getElementById('progressBar').style.width=((qIndex/questions.length)*100)+'%';
   document.getElementById('feedbackArea').innerHTML='';
-
-  document.getElementById('questionCard').innerHTML=`
-    <div class="q-type-badge">${q.type}</div>
-    <div class="q-main ${q.displayClass}">${q.display}</div>
-    <div class="q-hint">${q.hint}</div>`;
-
-  document.getElementById('optionsArea').innerHTML=q.options.map((o,i)=>
-    `<button class="opt-btn" onclick="selectAnswer(${i})" id="opt${i}">${o.text}</button>`
-  ).join('');
+  document.getElementById('questionCard').innerHTML=`<div class="q-type-badge">${q.type}</div><div class="q-main ${q.displayClass}">${q.display}</div><div class="q-hint">${q.hint}</div>`;
+  document.getElementById('optionsArea').innerHTML=q.options.map((o,i)=>`<button class="opt-btn" onclick="selectAnswer(${i})" id="opt${i}">${o.text}</button>`).join('');
 }
 
 function selectAnswer(idx){
-  if(locked) return;
-  locked=true;
-  const q=questions[qIndex];
-  const opts=q.options;
-  const fb=document.getElementById('feedbackArea');
+  if(locked) return; locked=true;
+  const q=questions[qIndex], opts=q.options, fb=document.getElementById('feedbackArea');
   document.querySelectorAll('.opt-btn').forEach(b=>b.classList.add('locked'));
-
   if(opts[idx].correct){
-    score++;
-    document.getElementById('opt'+idx).classList.add('correct');
+    score++; document.getElementById('opt'+idx).classList.add('correct');
     fb.innerHTML='<div class="feedback-bar ok">✓ Doğru!</div>';
   } else {
     document.getElementById('opt'+idx).classList.add('wrong');
     opts.forEach((o,i)=>{if(o.correct) document.getElementById('opt'+i).classList.add('correct');});
-    const ct=opts.find(o=>o.correct).text;
-    fb.innerHTML=`<div class="feedback-bar fail">✗ Doğru cevap: ${ct}</div>`;
+    fb.innerHTML=`<div class="feedback-bar fail">✗ Doğru cevap: ${opts.find(o=>o.correct).text}</div>`;
     wrongs.push(q.word);
-    if(repeatWrong){questions.push(generateQuestion(q.word,currentMode==='mixed'?'mixed':currentMode));}
+    if(repeatWrong) questions.push(generateQuestion(q.word,currentMode==='mixed'?'mixed':currentMode));
   }
   document.getElementById('qScore').textContent=score+' ✓';
   setTimeout(()=>{qIndex++;renderQuestion();},1200);
 }
 
 async function endQuiz(){
-  const total=questions.length;
-  const pct=Math.round(score/total*100);
-
-  await saveScore(total,score);
+  const total=questions.length, pct=Math.round(score/total*100);
+  const unique=[...new Map(wrongs.map(w=>[w.no,w])).values()];
+  await saveGame(currentMode,total,score,unique);
 
   const circle=document.getElementById('resultCircle');
   const cls=pct>=80?'great':pct>=50?'ok':'bad';
   circle.className='result-circle '+cls;
   circle.innerHTML=pct+'%<small>'+score+'/'+total+'</small>';
-
-  const msgs=pct>=90?'素晴らしい！ Mükemmel!':pct>=70?'よくできた！ Güzel!':pct>=50?'まあまあ Fena değil':'がんばって！ Tekrar dene!';
-  document.getElementById('resultMsg').textContent=msgs;
+  document.getElementById('resultMsg').textContent=pct>=90?'素晴らしい！ Mükemmel!':pct>=70?'よくできた！ Güzel!':pct>=50?'まあまあ Fena değil':'がんばって！ Tekrar dene!';
 
   const wl=document.getElementById('wrongList');
-  const unique=[...new Map(wrongs.map(w=>[w.no,w])).values()];
   if(unique.length){
     wl.style.display='block';
-    wl.innerHTML='<h3>Yanlış Yapılan Kelimeler ('+unique.length+')</h3>'+
-      unique.map(w=>`<div class="wrong-item"><span class="wrong-jp">${w.jp}</span><span class="wrong-ans">${w.rm} — ${w.tr}</span></div>`).join('');
-  } else { wl.style.display='none'; }
-
+    wl.innerHTML='<h3>Yanlış Yapılan Kelimeler ('+unique.length+')</h3>'+unique.map(w=>`<div class="wrong-item"><span class="wrong-jp">${w.jp}</span><span class="wrong-ans">${w.rm} — ${w.tr}</span></div>`).join('');
+  } else wl.style.display='none';
   showScreen('result');
 }
 
-function confirmQuit(){
-  if(confirm('Quizden çıkmak istediğinize emin misiniz?')) showScreen('home');
-}
+function confirmQuit(){ if(confirm('Quizden çıkmak istediğinize emin misiniz?')) showScreen('home'); }
 
-// ===== INIT =====
 tryAutoLogin();
 </script>
 </body>
