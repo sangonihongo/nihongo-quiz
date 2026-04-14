@@ -484,10 +484,10 @@ async function loadLeaderboard(){
     const snap=await db.ref('users').once('value');
     const users=[];
     snap.forEach(c=>{const s=c.child('summary').val();if(s&&s.totalPlayed>0) users.push({name:c.key,played:s.totalPlayed,correct:s.totalCorrect,games:s.totalGames,rate:Math.round(s.totalCorrect/s.totalPlayed*100)});});
-    users.sort((a,b)=>b.rate-a.rate||(b.correct-a.correct));
+    users.sort((a,b)=>b.correct-a.correct||(b.rate-a.rate));
     if(!users.length){cont.innerHTML='<div style="text-align:center;color:var(--text-dim)">Henüz kimse oynamamış</div>';return;}
     const medals=['🥇','🥈','🥉'];
-    cont.innerHTML=users.map((u,i)=>`<div class="lb-row ${currentUser&&u.name===currentUser.name?'me':''}"><span class="lb-rank">${medals[i]||(i+1)}</span><span class="lb-user">${u.name}</span><span class="lb-score">${u.rate}% (${u.games} oyun)</span></div>`).join('');
+    cont.innerHTML=users.map((u,i)=>{const isMe=currentUser&&u.name===currentUser.name;return `<div class="lb-row ${isMe?'me':''}"><span class="lb-rank">${medals[i]||(i+1)}</span><span class="lb-user">${u.name}</span>${isMe?`<span class="lb-score">${u.correct} doğru (${u.rate}%)</span>`:''}</div>`;}).join('');
   }catch(e){cont.innerHTML='<div style="color:var(--red);text-align:center">Yüklenemedi</div>';}
 }
 
