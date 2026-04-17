@@ -154,6 +154,14 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .result-actions button:active{transform:scale(0.97)}
 .btn-retry{background:var(--accent);color:#fff}
 .btn-home{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
+/* Berke Modu overlay */
+.berke-overlay{position:fixed;inset:0;z-index:9999;background:var(--bg);display:none;flex-direction:column}
+.berke-overlay.active{display:flex}
+.berke-bar{display:flex;align-items:center;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border)}
+.berke-bar button{background:none;border:none;color:var(--text-dim);font-size:22px;cursor:pointer;padding:4px 8px}
+.berke-bar span{flex:1;text-align:center;font-size:15px;font-weight:700;color:var(--gold)}
+.berke-frame{flex:1;border:none;width:100%;height:100%}
+
 .spinner{display:inline-block;width:20px;height:20px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
 </style>
 </head>
@@ -211,6 +219,7 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
     <div class="mode-btn" onclick="selectMode('hiragana2turkish')"><div class="mode-icon">あ → TR</div><div class="mode-title">Hiragana → Türkçe</div><div class="mode-desc">Hiragana'yı gör, Türkçe anlamını seç</div></div>
     <div class="mode-btn" onclick="selectMode('turkish2pair')"><div class="mode-icon">TR → あ+abc</div><div class="mode-title">Türkçe → Romaji + Hiragana</div><div class="mode-desc">Türkçe anlamı gör, doğru çifti seç</div></div>
     <div class="mode-btn" onclick="selectMode('mixed')"><div class="mode-icon">🎲 Karışık</div><div class="mode-title">Karışık Mod</div><div class="mode-desc">Her üç tip rastgele karışık gelir</div></div>
+    <div class="mode-btn" onclick="openBerke()" style="border-color:var(--accent2);background:linear-gradient(135deg,var(--card),var(--accent2))"><div class="mode-icon">🃏 Flash Card</div><div class="mode-title">Berke Modu</div><div class="mode-desc">Flash card ile çalış — bildim/bilmedim, ders filtresi, çizim alanı</div></div>
   </div>
   <div class="home-btns">
     <button onclick="toggleHistory()">📋 Oyun Geçmişi</button>
@@ -263,6 +272,16 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 
 </div>
 
+<!-- BERKE MODU OVERLAY -->
+<div class="berke-overlay" id="berkeOverlay">
+  <div class="berke-bar">
+    <button onclick="closeBerke()">✕</button>
+    <span>🃏 Berke Modu</span>
+    <div style="width:38px"></div>
+  </div>
+  <iframe class="berke-frame" id="berkeFrame"></iframe>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
@@ -299,13 +318,12 @@ function loadWords(){
         const words=[];
         for(let i=0;i<rows.length;i++){
           const c=rows[i].c;
-          if(!c||!c[0]) continue;
-          const no=c[0]?.v;
+          if(!c||!c[1]) continue;
           const jp=(c[1]?.v||'').toString().trim();
           const rm=(c[2]?.v||'').toString().trim();
           const tr=(c[3]?.v||'').toString().trim();
-          if(no&&jp&&rm&&tr){
-            words.push({no:parseInt(no),jp:jp,rm:rm,tr:tr});
+          if(jp&&rm&&tr){
+            words.push({no:i+1,jp:jp,rm:rm,tr:tr});
           }
         }
         if(words.length>0){
@@ -555,6 +573,20 @@ async function endQuiz(){
   showScreen('result');
 }
 function confirmQuit(){if(confirm('Quizden çıkmak istediğinize emin misiniz?'))showScreen('home');}
+
+// BERKE MODU
+function openBerke(){
+  const ov=document.getElementById('berkeOverlay');
+  const fr=document.getElementById('berkeFrame');
+  fr.src='berke.html';
+  ov.classList.add('active');
+}
+function closeBerke(){
+  const ov=document.getElementById('berkeOverlay');
+  const fr=document.getElementById('berkeFrame');
+  ov.classList.remove('active');
+  fr.src='';
+}
 
 // ===== INIT =====
 async function init(){
