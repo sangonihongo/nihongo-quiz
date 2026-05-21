@@ -224,6 +224,7 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
     <div class="mode-btn" onclick="selectMode('turkish2pair')"><div class="mode-icon">TR → あ+abc</div><div class="mode-title">Türkçe → Romaji + Hiragana</div><div class="mode-desc">Türkçe anlamı gör, doğru çifti seç</div></div>
     <div class="mode-btn" onclick="selectMode('mixed')"><div class="mode-icon">🎲 Karışık</div><div class="mode-title">Karışık Mod</div><div class="mode-desc">Her üç tip rastgele karışık gelir</div></div>
     <div class="mode-btn" onclick="openBerke()" style="border-color:var(--accent2);background:linear-gradient(135deg,var(--card),var(--accent2))"><div class="mode-icon">🃏 Flash Card</div><div class="mode-title">Berke Modu</div><div class="mode-desc">Flash card ile çalış — bildim/bilmedim, ders filtresi, çizim alanı</div></div>
+    <div class="mode-btn" onclick="openUnite()" style="border-color:#0f3460;background:linear-gradient(135deg,var(--card),#1a3a6a)"><div class="mode-icon">📚 Üniteler</div><div class="mode-title">Ünite Modu</div><div class="mode-desc">Ünite bazlı flip card — zamanlı puanlama, TR↔JP</div></div>
   </div>
   <div class="home-btns">
     <button onclick="toggleHistory()">📋 Oyun Geçmişi</button>
@@ -284,6 +285,16 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
     <div style="width:38px"></div>
   </div>
   <iframe class="berke-frame" id="berkeFrame"></iframe>
+</div>
+
+<!-- UNITE MODU OVERLAY -->
+<div class="berke-overlay" id="uniteOverlay">
+  <div class="berke-bar">
+    <button onclick="closeUnite()">✕</button>
+    <span>📚 Üniteler</span>
+    <div style="width:38px"></div>
+  </div>
+  <iframe class="berke-frame" id="uniteFrame"></iframe>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -568,6 +579,20 @@ function openBerke(){
 function closeBerke(){
   const ov=document.getElementById('berkeOverlay');
   const fr=document.getElementById('berkeFrame');
+  ov.classList.remove('active');
+  fr.src='';
+}
+
+// UNITE MODU
+function openUnite(){
+  const ov=document.getElementById('uniteOverlay');
+  const fr=document.getElementById('uniteFrame');
+  fr.src='unite.html';
+  ov.classList.add('active');
+}
+function closeUnite(){
+  const ov=document.getElementById('uniteOverlay');
+  const fr=document.getElementById('uniteFrame');
   ov.classList.remove('active');
   fr.src='';
 }
