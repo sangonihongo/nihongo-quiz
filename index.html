@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>日本語クイズ — Japonca Kelime Testi</title>
 <style>
@@ -16,7 +16,12 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .screen{display:none;min-height:100%;padding:20px 16px 40px}
 .screen.active{display:flex;flex-direction:column}
 
-/* LOGIN */
+#loading{align-items:center;justify-content:center;gap:16px;text-align:center}
+.load-spinner{width:48px;height:48px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-text{font-size:14px;color:var(--text-dim)}
+.load-count{font-size:20px;font-weight:700;color:var(--gold)}
+
 #login{align-items:center;justify-content:center;gap:24px;text-align:center}
 .login-logo{font-size:56px;text-shadow:0 0 40px rgba(233,69,96,0.4);animation:float 3s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -33,15 +38,8 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .login-btn:disabled{opacity:0.5}
 .login-hint{font-size:11px;color:var(--text-dark);margin-top:8px}
 .login-error{font-size:13px;color:var(--red);margin-top:8px;min-height:20px}
+.visitor-counter{font-size:11px;color:var(--text-dark);text-align:center;margin-top:12px}
 
-/* LOADING */
-#loading{align-items:center;justify-content:center;gap:16px;text-align:center}
-.load-spinner{width:48px;height:48px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.load-text{font-size:14px;color:var(--text-dim)}
-.load-count{font-size:20px;font-weight:700;color:var(--gold)}
-
-/* HOME */
 #home{align-items:center;gap:20px;text-align:center;padding-top:16px}
 .user-bar{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:340px;padding:10px 16px;background:var(--card);border-radius:12px}
 .user-name{font-size:14px;font-weight:700}
@@ -64,42 +62,26 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .home-btns{display:flex;gap:10px;width:100%;max-width:340px}
 .home-btns button{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--gold);padding:10px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600}
 .home-btns button:active{background:var(--card-hover)}
-
-/* HISTORY */
 .history-panel{background:var(--card);border-radius:var(--radius);padding:16px;width:100%;max-width:340px;display:none}
 .history-panel.open{display:block}
 .history-panel h3{font-size:14px;color:var(--gold);margin-bottom:12px;text-align:center}
-.hist-item{padding:10px 0;border-bottom:1px solid var(--border)}
-.hist-item:last-child{border:none}
+.hist-item{padding:10px 0;border-bottom:1px solid var(--border)}.hist-item:last-child{border:none}
 .hist-top{display:flex;justify-content:space-between;align-items:center}
-.hist-date{font-size:11px;color:var(--text-dim)}
-.hist-mode{font-size:11px;color:var(--accent);font-weight:600}
+.hist-date{font-size:11px;color:var(--text-dim)}.hist-mode{font-size:11px;color:var(--accent);font-weight:600}
 .hist-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
-.hist-score{font-size:16px;font-weight:700}
-.hist-score.great{color:var(--green)}
-.hist-score.ok{color:var(--gold)}
-.hist-score.bad{color:var(--red)}
-.hist-pct{font-size:13px;color:var(--text-dim)}
-.hist-empty{text-align:center;color:var(--text-dim);font-size:13px;padding:16px 0}
-
-/* LEADERBOARD */
+.hist-score{font-size:16px;font-weight:700}.hist-score.great{color:var(--green)}.hist-score.ok{color:var(--gold)}.hist-score.bad{color:var(--red)}
+.hist-pct{font-size:13px;color:var(--text-dim)}.hist-empty{text-align:center;color:var(--text-dim);font-size:13px;padding:16px 0}
 .leaderboard{background:var(--card);border-radius:var(--radius);padding:16px;width:100%;max-width:340px;display:none}
 .leaderboard.open{display:block}
 .leaderboard h3{font-size:14px;color:var(--gold);margin-bottom:12px;text-align:center}
-.lb-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.lb-row:last-child{border:none}
-.lb-rank{width:28px;font-weight:700;color:var(--text-dim)}
-.lb-user{flex:1;font-weight:600}
-.lb-score{color:var(--green);font-weight:700}
-.lb-row.me{color:var(--gold)}
-.lb-row.me .lb-rank{color:var(--gold)}
+.lb-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.lb-row:last-child{border:none}
+.lb-rank{width:28px;font-weight:700;color:var(--text-dim)}.lb-user{flex:1;font-weight:600}.lb-score{color:var(--green);font-weight:700}
+.lb-row.me{color:var(--gold)}.lb-row.me .lb-rank{color:var(--gold)}
 
-/* SETTINGS */
 #settings{align-items:center;justify-content:center;gap:20px}
 .settings-card{background:var(--card);border-radius:var(--radius);padding:24px 20px;width:100%;max-width:360px}
 .settings-card h2{font-size:18px;margin-bottom:16px;text-align:center}
-.setting-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
-.setting-row:last-child{border:none}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}.setting-row:last-child{border:none}
 .setting-label{font-size:14px;font-weight:600}
 .count-selector{display:flex;align-items:center;gap:12px}
 .count-btn{width:36px;height:36px;border-radius:50%;background:var(--accent2);border:none;color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;font-weight:700}
@@ -109,7 +91,6 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .start-btn:active{transform:scale(0.97)}
 .back-link{background:none;border:none;color:var(--text-dim);font-size:14px;cursor:pointer;font-family:inherit;padding:8px}
 
-/* QUIZ */
 #quiz{gap:16px}
 .quiz-header{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
 .quiz-back{background:none;border:none;color:var(--text-dim);font-size:24px;cursor:pointer;padding:4px 8px}
@@ -135,7 +116,6 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .feedback-bar.ok{background:rgba(0,200,83,0.12);color:var(--green)}
 .feedback-bar.fail{background:rgba(255,23,68,0.1);color:var(--red)}
 
-/* RESULT */
 #result{align-items:center;justify-content:center;gap:20px;text-align:center}
 .result-circle{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:42px;font-weight:700;border:4px solid}
 .result-circle.great{border-color:var(--green);color:var(--green);background:rgba(0,200,83,0.08)}
@@ -145,8 +125,7 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .result-msg{font-size:20px;font-weight:700}
 .wrong-list{background:var(--card);border-radius:var(--radius);padding:16px;width:100%;max-width:360px;text-align:left;max-height:240px;overflow-y:auto}
 .wrong-list h3{font-size:14px;color:var(--accent);margin-bottom:10px}
-.wrong-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.wrong-item:last-child{border:none}
+.wrong-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.wrong-item:last-child{border:none}
 .wrong-jp{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:18px}
 .wrong-ans{color:var(--text-dim);text-align:right}
 .result-actions{display:flex;gap:12px;width:100%;max-width:360px}
@@ -154,48 +133,32 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 .result-actions button:active{transform:scale(0.97)}
 .btn-retry{background:var(--accent);color:#fff}
 .btn-home{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
-/* Berke Modu overlay */
+
 .berke-overlay{position:fixed;inset:0;z-index:9999;background:var(--bg);display:none;flex-direction:column}
 .berke-overlay.active{display:flex}
 .berke-bar{display:flex;align-items:center;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border)}
 .berke-bar button{background:none;border:none;color:var(--text-dim);font-size:22px;cursor:pointer;padding:4px 8px}
 .berke-bar span{flex:1;text-align:center;font-size:15px;font-weight:700;color:var(--gold)}
 .berke-frame{flex:1;border:none;width:100%;height:100%}
-
 .spinner{display:inline-block;width:20px;height:20px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
-
-/* Visitor counter */
-.visitor-counter{font-size:11px;color:var(--text-dark);text-align:center;margin-top:12px}
 </style>
 </head>
 <body>
 <div class="scroll-wrap">
 
-<!-- LOADING -->
 <div id="loading" class="screen active">
   <div class="load-spinner"></div>
   <div class="load-text">Kelimeler yükleniyor...</div>
   <div class="load-count" id="loadCount"></div>
-  <div id="debugLog" style="margin-top:20px;text-align:left;font-size:11px;color:var(--text-dim);max-width:340px;word-break:break-all;"></div>
 </div>
 
-<!-- LOGIN -->
 <div id="login" class="screen">
   <div class="login-logo">鳥居</div>
-  <div>
-    <div class="login-title">日本語クイズ</div>
-    <div style="color:var(--text-dim);font-size:13px;margin-top:4px">Japonca Kelime Testi</div>
-  </div>
+  <div><div class="login-title">日本語クイズ</div><div style="color:var(--text-dim);font-size:13px;margin-top:4px">Japonca Kelime Testi</div></div>
   <div class="login-card">
     <h3>Giriş yap veya yeni hesap oluştur</h3>
-    <div class="input-group">
-      <label>Kullanıcı Adı</label>
-      <input type="text" id="inpUser" placeholder="örn: sango" autocomplete="off" maxlength="20">
-    </div>
-    <div class="input-group">
-      <label>PIN (4 haneli)</label>
-      <input type="password" id="inpPin" placeholder="••••" maxlength="4" inputmode="numeric" pattern="[0-9]*">
-    </div>
+    <div class="input-group"><label>Kullanıcı Adı</label><input type="text" id="inpUser" placeholder="örn: sango" autocomplete="off" maxlength="20"></div>
+    <div class="input-group"><label>PIN (4 haneli)</label><input type="password" id="inpPin" placeholder="••••" maxlength="4" inputmode="numeric" pattern="[0-9]*"></div>
     <button class="login-btn" id="btnLogin" onclick="doLogin()">Giriş / Kayıt</button>
     <div class="login-error" id="loginError"></div>
     <div class="login-hint">İlk girişte otomatik hesap oluşturulur. Aynı kullanıcı adı + PIN ile farklı cihazlardan giriş yapabilirsin.</div>
@@ -203,17 +166,10 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
   <div class="visitor-counter" id="visitorCounter"></div>
 </div>
 
-<!-- HOME -->
 <div id="home" class="screen">
-  <div class="user-bar">
-    <div class="user-name">Hoş geldin, <span id="dispUser"></span></div>
-    <button class="logout-btn" onclick="doLogout()">Çıkış</button>
-  </div>
+  <div class="user-bar"><div class="user-name">Hoş geldin, <span id="dispUser"></span></div><button class="logout-btn" onclick="doLogout()">Çıkış</button></div>
   <div class="home-logo">鳥居</div>
-  <div>
-    <div class="home-title">日本語クイズ</div>
-    <div class="home-sub" id="wordCountLabel">Kelimeler yükleniyor...</div>
-  </div>
+  <div><div class="home-title">日本語クイズ</div><div class="home-sub" id="wordCountLabel">Kelimeler</div></div>
   <div class="stats-bar">
     <div class="stat-item"><div class="stat-val" id="totalGames">0</div><div class="stat-label">Oyun</div></div>
     <div class="stat-item"><div class="stat-val" id="totalCorrect">0</div><div class="stat-label">Doğru</div></div>
@@ -231,17 +187,10 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
     <button onclick="toggleHistory()">📋 Oyun Geçmişi</button>
     <button onclick="toggleLeaderboard()">🏆 Sıralama</button>
   </div>
-  <div class="history-panel" id="historyPanel">
-    <h3>📋 Oyun Geçmişi</h3>
-    <div id="histContent"></div>
-  </div>
-  <div class="leaderboard" id="leaderboard">
-    <h3>🏆 En İyiler</h3>
-    <div id="lbContent"></div>
-  </div>
+  <div class="history-panel" id="historyPanel"><h3>📋 Oyun Geçmişi</h3><div id="histContent"></div></div>
+  <div class="leaderboard" id="leaderboard"><h3>🏆 En İyiler</h3><div id="lbContent"></div></div>
 </div>
 
-<!-- SETTINGS -->
 <div id="settings" class="screen">
   <div class="settings-card">
     <h2 id="settingsTitle">Ayarlar</h2>
@@ -252,20 +201,14 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
   <button class="back-link" onclick="showScreen('home')">← Geri</button>
 </div>
 
-<!-- QUIZ -->
 <div id="quiz" class="screen">
-  <div class="quiz-header">
-    <button class="quiz-back" onclick="confirmQuit()">✕</button>
-    <span class="quiz-progress" id="qProgress">1 / 20</span>
-    <span class="quiz-score" id="qScore">0 ✓</span>
-  </div>
+  <div class="quiz-header"><button class="quiz-back" onclick="confirmQuit()">✕</button><span class="quiz-progress" id="qProgress">1 / 20</span><span class="quiz-score" id="qScore">0 ✓</span></div>
   <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
   <div class="question-card" id="questionCard"></div>
   <div class="options" id="optionsArea"></div>
   <div id="feedbackArea"></div>
 </div>
 
-<!-- RESULT -->
 <div id="result" class="screen">
   <div class="result-circle" id="resultCircle"></div>
   <div class="result-msg" id="resultMsg"></div>
@@ -278,135 +221,74 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
 
 </div>
 
-<!-- BERKE MODU OVERLAY -->
 <div class="berke-overlay" id="berkeOverlay">
-  <div class="berke-bar">
-    <button onclick="closeBerke()">✕</button>
-    <span>🃏 Berke Modu</span>
-    <div style="width:38px"></div>
-  </div>
+  <div class="berke-bar"><button onclick="closeBerke()">✕</button><span>🃏 Berke Modu</span><div style="width:38px"></div></div>
   <iframe class="berke-frame" id="berkeFrame"></iframe>
 </div>
-
-<!-- UNITE MODU OVERLAY -->
 <div class="berke-overlay" id="uniteOverlay">
-  <div class="berke-bar">
-    <button onclick="closeUnite()">✕</button>
-    <span>📚 Üniteler</span>
-    <div style="width:38px"></div>
-  </div>
+  <div class="berke-bar"><button onclick="closeUnite()">✕</button><span>📚 Üniteler</span><div style="width:38px"></div></div>
   <iframe class="berke-frame" id="uniteFrame"></iframe>
 </div>
 
 <script>
-// ERKEN DEBUG — Firebase yüklenmeden önce çalışır
-function dlog(msg){
-  var el=document.getElementById('debugLog');
-  if(el) el.innerHTML+=new Date().toLocaleTimeString()+' → '+msg+'<br>';
-  console.log('DEBUG:',msg);
+// ===== FIREBASE REST API (SDK yok — sadece fetch) =====
+const FB='https://nihongo-quiz-decf9-default-rtdb.europe-west1.firebasedatabase.app';
+
+async function fbGet(path){
+  const r=await fetch(FB+'/'+path+'.json',{signal:AbortSignal.timeout(5000)});
+  return r.json();
 }
-window.onerror=function(msg,url,line){
-  dlog('JS HATA: '+msg+' (satır:'+line+')');
-};
-dlog('Sayfa açıldı, Firebase SDK yükleniyor...');
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-
-<script>
-dlog('Firebase SDK yüklendi');
-
-// ===== FIREBASE =====
-firebase.initializeApp({
-  apiKey:"AIzaSyBYKN1MNRADwtVSysJj8g5B4HOKkmuS6oo",
-  authDomain:"nihongo-quiz-decf9.firebaseapp.com",
-  databaseURL:"https://nihongo-quiz-decf9-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId:"nihongo-quiz-decf9",
-  storageBucket:"nihongo-quiz-decf9.firebasestorage.app",
-  messagingSenderId:"851056698850",
-  appId:"1:851056698850:web:5cdfd0380b37b184bd45bb"
-});
-const db=firebase.database();
-
-// DEBUG LOG
-function dlog(msg){
-  const el=document.getElementById('debugLog');
-  if(el) el.innerHTML+=new Date().toLocaleTimeString()+' → '+msg+'<br>';
-  console.log('DEBUG:',msg);
+async function fbSet(path,data){
+  await fetch(FB+'/'+path+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),signal:AbortSignal.timeout(5000)});
+}
+async function fbUpdate(path,data){
+  await fetch(FB+'/'+path+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),signal:AbortSignal.timeout(5000)});
+}
+async function fbPush(path,data){
+  const r=await fetch(FB+'/'+path+'.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),signal:AbortSignal.timeout(5000)});
+  return r.json();
 }
 
-// ===== VISITOR COUNTER =====
-async function trackVisit(){
-  try{
-    const ref=db.ref('stats/visits');
-    await ref.transaction(v=>(v||0)+1);
-    const snap=await db.ref('stats').once('value');
-    const s=snap.val()||{};
-    const el=document.getElementById('visitorCounter');
-    el.textContent='👁 '+(s.visits||0)+' ziyaret · 🔑 '+(s.logins||0)+' giriş';
-  }catch(e){console.error(e);}
-}
-async function trackLogin(){
-  try{ await db.ref('stats/logins').transaction(v=>(v||0)+1); }catch(e){}
-}
-
-// ===== APPS SCRIPT URL (gizli anahtarlı) =====
+// ===== APPS SCRIPT =====
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbz4NH6cLngnYhe74t13jvUlFS9Bi72I4nGfPx09ak3f6MJPe7_-pz-oAzUwRv4Vr77U4g/exec';
 const SCRIPT_KEY='sango2026gizli';
 
-// ===== WORDS — loaded dynamically =====
 let WORDS=[];
+let currentUser=null, currentMode='', questionCount=20, repeatWrong=true;
+let questions=[], qIndex=0, score=0, wrongs=[], locked=false;
+const MODE_NAMES={hiragana2romaji:'あ→Romaji',hiragana2turkish:'あ→Türkçe',turkish2pair:'TR→あ+abc',mixed:'Karışık'};
 
-// ===== LOAD WORDS via Apps Script =====
+// ===== LOAD WORDS =====
 async function loadWords(){
-  const loadCount=document.getElementById('loadCount');
-  loadCount.textContent='Kelimeler çekiliyor...';
-  dlog('loadWords başladı');
+  const lc=document.getElementById('loadCount');
+  lc.textContent='Kelimeler çekiliyor...';
   try{
-    dlog('fetch başlıyor: '+SCRIPT_URL);
     const resp=await fetch(SCRIPT_URL+'?key='+SCRIPT_KEY);
-    dlog('fetch tamamlandı, status: '+resp.status);
     const data=await resp.json();
-    dlog('JSON parse OK, satır sayısı: '+data.length);
     if(data.error) throw new Error(data.error);
     const words=[];
     data.forEach((w,i)=>{
-      const jp=(w.jp||'').toString().trim();
-      const rm=(w.rm||'').toString().trim();
-      const tr=(w.tr||'').toString().trim();
+      const jp=(w.jp||'').toString().trim(),rm=(w.rm||'').toString().trim(),tr=(w.tr||'').toString().trim();
       if(jp&&rm&&tr) words.push({no:i+1,jp,rm,tr});
     });
     if(words.length>0){
       WORDS=words;
       localStorage.setItem('nihongo_words_cache',JSON.stringify(WORDS));
-      loadCount.textContent=WORDS.length+' kelime yüklendi ✓';
-      dlog('loadWords OK: '+WORDS.length+' kelime');
+      lc.textContent=WORDS.length+' kelime yüklendi ✓';
       return true;
     } else throw new Error('Kelime bulunamadı');
   }catch(e){
-    dlog('loadWords HATA: '+e.message);
     const cached=localStorage.getItem('nihongo_words_cache');
-    if(cached){
-      WORDS=JSON.parse(cached);
-      loadCount.textContent=WORDS.length+' kelime (önbellekten) ✓';
-      dlog('Cache kullanıldı: '+WORDS.length);
-      return true;
-    }
-    loadCount.innerHTML='Yüklenemedi!<br><span style="font-size:12px;color:var(--red)">'+e.message+'</span>';
+    if(cached){WORDS=JSON.parse(cached);lc.textContent=WORDS.length+' kelime (önbellekten) ✓';return true;}
+    lc.innerHTML='Yüklenemedi!<br><span style="font-size:12px;color:var(--red)">'+e.message+'</span>';
     return false;
   }
 }
 
-// ===== STATE =====
-let currentUser=null, currentMode='', questionCount=20, repeatWrong=true;
-let questions=[], qIndex=0, score=0, wrongs=[], locked=false;
-const MODE_NAMES={hiragana2romaji:'あ→Romaji',hiragana2turkish:'あ→Türkçe',turkish2pair:'TR→あ+abc',mixed:'Karışık'};
-
-// PIN HASH
+// ===== PIN HASH =====
 function hashPin(pin){let h=0;const s=pin+'nihongo_salt_2026';for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return 'h'+Math.abs(h).toString(36);}
 
-// AUTH
+// ===== AUTH =====
 async function doLogin(){
   const user=document.getElementById('inpUser').value.trim().toLowerCase();
   const pin=document.getElementById('inpPin').value.trim();
@@ -419,34 +301,23 @@ async function doLogin(){
   const safeUser=user.replace(/[.#$\[\]\/]/g,'_');
   const pinHash=hashPin(pin);
   try{
-    dlog('Firebase read: users/'+safeUser+'/profile');
-    
-    // Firebase çağrısına 4sn timeout
-    const firebaseTimeout=(promise)=>Promise.race([
-      promise,
-      new Promise((_,reject)=>setTimeout(()=>reject(new Error('Firebase timeout (4sn)')),4000))
-    ]);
-    
-    const snap=await firebaseTimeout(db.ref('users/'+safeUser+'/profile').once('value'));
-    dlog('Firebase read OK, exists='+snap.exists());
-    if(snap.exists()){
-      if(snap.val().pin!==pinHash){dlog('PIN eşleşmedi');errEl.textContent='PIN yanlış.';btn.disabled=false;btn.textContent='Giriş / Kayıt';return;}
+    const profile=await fbGet('users/'+safeUser+'/profile');
+    if(profile){
+      if(profile.pin!==pinHash){errEl.textContent='PIN yanlış.';btn.disabled=false;btn.textContent='Giriş / Kayıt';return;}
     }else{
-      dlog('Yeni kullanıcı oluşturuluyor...');
-      await db.ref('users/'+safeUser+'/profile').set({pin:pinHash,created:Date.now()});
-      dlog('Kullanıcı oluşturuldu');
+      await fbSet('users/'+safeUser+'/profile',{pin:pinHash,created:Date.now()});
     }
     currentUser={name:safeUser};
     trackLogin().catch(()=>{});
     localStorage.setItem('nihongo_user',safeUser);
     localStorage.setItem('nihongo_pin',pin);
     btn.disabled=false;btn.textContent='Giriş / Kayıt';
-    dlog('loadUserStats başlıyor...');
     await loadUserStats();
-    dlog('loadUserStats tamamlandı');
     enterHome();
-    dlog('enterHome çağrıldı');
-  }catch(e){dlog('doLogin catch: '+e.message);errEl.textContent='Bağlantı hatası.';btn.disabled=false;btn.textContent='Giriş / Kayıt';}
+  }catch(e){
+    errEl.textContent='Bağlantı hatası: '+e.message;
+    btn.disabled=false;btn.textContent='Giriş / Kayıt';
+  }
 }
 
 function doLogout(){
@@ -458,14 +329,9 @@ function doLogout(){
 
 async function tryAutoLogin(){
   const u=localStorage.getItem('nihongo_user'),p=localStorage.getItem('nihongo_pin');
-  dlog('tryAutoLogin: user='+u+' pin='+(p?'***':'yok'));
-  if(!u||!p){ dlog('Kayıtlı kullanıcı yok'); return false; }
+  if(!u||!p) return false;
   document.getElementById('inpUser').value=u;document.getElementById('inpPin').value=p;
-  try{ 
-    dlog('doLogin çağrılıyor...');
-    await doLogin(); 
-    dlog('doLogin tamamlandı, currentUser='+(currentUser?currentUser.name:'null'));
-  }catch(e){ dlog('doLogin HATA: '+e.message); }
+  try{await doLogin();}catch(e){}
   return !!currentUser;
 }
 
@@ -476,19 +342,18 @@ function enterHome(){
   showScreen('home');
 }
 
-// STATS
+// ===== STATS =====
 async function loadUserStats(){
   if(!currentUser) return;
   try{
-    const fbTimeout=(p)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),4000))]);
-    const snap=await fbTimeout(db.ref('users/'+currentUser.name+'/games').orderByChild('time').limitToLast(50).once('value'));
+    const gamesData=await fbGet('users/'+currentUser.name+'/games');
     const games=[];
-    snap.forEach(c=>{games.push({id:c.key,...c.val()});});
-    games.sort((a,b)=>b.time-a.time);
-    currentUser.games=games;
+    if(gamesData){Object.keys(gamesData).forEach(k=>{games.push({id:k,...gamesData[k]});});}
+    games.sort((a,b)=>(b.time||0)-(a.time||0));
+    currentUser.games=games.slice(0,50);
     let tp=0,tc=0;
-    games.forEach(g=>{tp+=g.total;tc+=g.correct;});
-    currentUser.totalGames=games.length;currentUser.totalPlayed=tp;currentUser.totalCorrect=tc;
+    currentUser.games.forEach(g=>{tp+=g.total||0;tc+=g.correct||0;});
+    currentUser.totalGames=currentUser.games.length;currentUser.totalPlayed=tp;currentUser.totalCorrect=tc;
   }catch(e){currentUser.games=[];currentUser.totalGames=0;currentUser.totalPlayed=0;currentUser.totalCorrect=0;}
 }
 
@@ -500,25 +365,37 @@ function updateStatsUI(){
   document.getElementById('totalRate').textContent=p?Math.round(c/p*100)+'%':'—';
 }
 
-// SAVE GAME
+// ===== SAVE GAME =====
 async function saveGame(mode,total,correct,wrongWords){
   if(!currentUser) return;
   const game={mode,total,correct,wrong:wrongWords.map(w=>w.no),pct:Math.round(correct/total*100),time:Date.now()};
   try{
-    await db.ref('users/'+currentUser.name+'/games').push(game);
+    await fbPush('users/'+currentUser.name+'/games',game);
     await loadUserStats();
-    await db.ref('users/'+currentUser.name+'/summary').set({
+    await fbSet('users/'+currentUser.name+'/summary',{
       totalGames:currentUser.totalGames,totalPlayed:currentUser.totalPlayed,
       totalCorrect:currentUser.totalCorrect,lastPlay:Date.now()
     });
   }catch(e){console.error(e);}
 }
 
-// HISTORY
+// ===== VISITOR COUNTER =====
+async function trackVisit(){
+  try{
+    const s=await fbGet('stats');
+    const v=(s?.visits||0)+1;
+    await fbUpdate('stats',{visits:v});
+    document.getElementById('visitorCounter').textContent='👁 '+v+' ziyaret · 🔑 '+(s?.logins||0)+' giriş';
+  }catch(e){}
+}
+async function trackLogin(){
+  try{const s=await fbGet('stats');await fbUpdate('stats',{logins:(s?.logins||0)+1});}catch(e){}
+}
+
+// ===== HISTORY =====
 function toggleHistory(){
-  const p=document.getElementById('historyPanel');
   document.getElementById('leaderboard').classList.remove('open');
-  if(p.classList.toggle('open')) renderHistory();
+  if(document.getElementById('historyPanel').classList.toggle('open')) renderHistory();
 }
 function renderHistory(){
   const cont=document.getElementById('histContent');
@@ -528,24 +405,26 @@ function renderHistory(){
     const d=new Date(g.time);
     const ds=d.toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'});
     const ts=d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
-    const cls=g.pct>=80?'great':g.pct>=50?'ok':'bad';
-    return `<div class="hist-item"><div class="hist-top"><span class="hist-date">${ds} ${ts}</span><span class="hist-mode">${MODE_NAMES[g.mode]||g.mode}</span></div><div class="hist-bottom"><span class="hist-score ${cls}">${g.correct}/${g.total}</span><span class="hist-pct">%${g.pct}</span></div></div>`;
+    const cls=(g.pct||0)>=80?'great':(g.pct||0)>=50?'ok':'bad';
+    return `<div class="hist-item"><div class="hist-top"><span class="hist-date">${ds} ${ts}</span><span class="hist-mode">${MODE_NAMES[g.mode]||g.mode}</span></div><div class="hist-bottom"><span class="hist-score ${cls}">${g.correct}/${g.total}</span><span class="hist-pct">%${g.pct||0}</span></div></div>`;
   }).join('');
 }
 
-// LEADERBOARD
+// ===== LEADERBOARD =====
 function toggleLeaderboard(){
-  const lb=document.getElementById('leaderboard');
   document.getElementById('historyPanel').classList.remove('open');
-  if(lb.classList.toggle('open')) loadLeaderboard();
+  if(document.getElementById('leaderboard').classList.toggle('open')) loadLeaderboard();
 }
 async function loadLeaderboard(){
   const cont=document.getElementById('lbContent');
   cont.innerHTML='<div style="text-align:center"><span class="spinner"></span></div>';
   try{
-    const snap=await db.ref('users').once('value');
+    const allUsers=await fbGet('users');
     const users=[];
-    snap.forEach(c=>{const s=c.child('summary').val();if(s&&s.totalPlayed>0) users.push({name:c.key,played:s.totalPlayed,correct:s.totalCorrect,games:s.totalGames,rate:Math.round(s.totalCorrect/s.totalPlayed*100)});});
+    if(allUsers){Object.keys(allUsers).forEach(k=>{
+      const s=allUsers[k]?.summary;
+      if(s&&s.totalPlayed>0) users.push({name:k,played:s.totalPlayed,correct:s.totalCorrect,games:s.totalGames,rate:Math.round(s.totalCorrect/s.totalPlayed*100)});
+    });}
     users.sort((a,b)=>b.correct-a.correct||(b.rate-a.rate));
     if(!users.length){cont.innerHTML='<div style="text-align:center;color:var(--text-dim)">Henüz kimse oynamamış</div>';return;}
     const medals=['🥇','🥈','🥉'];
@@ -553,7 +432,7 @@ async function loadLeaderboard(){
   }catch(e){cont.innerHTML='<div style="color:var(--red);text-align:center">Yüklenemedi</div>';}
 }
 
-// NAVIGATION
+// ===== NAVIGATION =====
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -565,7 +444,7 @@ function selectMode(mode){currentMode=mode;document.getElementById('settingsTitl
 function adjustCount(d){questionCount=Math.max(5,Math.min(WORDS.length,questionCount+d));document.getElementById('qCount').textContent=questionCount;}
 function toggleRepeat(){repeatWrong=!repeatWrong;document.getElementById('repeatToggle').textContent=repeatWrong?'EVET':'HAYIR';}
 
-// HELPERS
+// ===== QUIZ HELPERS =====
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function pickDistractors(correct,field,count){return shuffle(WORDS.filter(w=>w[field]!==correct[field])).slice(0,count);}
 
@@ -576,7 +455,6 @@ function generateQuestion(word,mode){
   if(mode==='turkish2pair'){const d=pickDistractors(word,'rm',3);return{type:'Türkçe → Romaji + Hiragana',display:word.tr,displayClass:'turkish-q',hint:'Doğru çifti seçin',options:shuffle([{text:word.rm+' — '+word.jp,correct:true},...d.map(x=>({text:x.rm+' — '+x.jp,correct:false}))]),word};}
 }
 
-// QUIZ
 function startQuiz(){
   const pool=shuffle(WORDS).slice(0,Math.min(questionCount,WORDS.length));
   questions=pool.map(w=>generateQuestion(w,currentMode));
@@ -618,61 +496,23 @@ async function endQuiz(){
 }
 function confirmQuit(){if(confirm('Quizden çıkmak istediğinize emin misiniz?'))showScreen('home');}
 
-// BERKE MODU
-function openBerke(){
-  const ov=document.getElementById('berkeOverlay');
-  const fr=document.getElementById('berkeFrame');
-  fr.src='berke.html';
-  ov.classList.add('active');
-}
-function closeBerke(){
-  const ov=document.getElementById('berkeOverlay');
-  const fr=document.getElementById('berkeFrame');
-  ov.classList.remove('active');
-  fr.src='';
-}
-
-// UNITE MODU
-function openUnite(){
-  const ov=document.getElementById('uniteOverlay');
-  const fr=document.getElementById('uniteFrame');
-  fr.src='unite.html';
-  ov.classList.add('active');
-}
-function closeUnite(){
-  const ov=document.getElementById('uniteOverlay');
-  const fr=document.getElementById('uniteFrame');
-  ov.classList.remove('active');
-  fr.src='';
-}
+// ===== BERKE / UNITE =====
+function openBerke(){document.getElementById('berkeFrame').src='berke.html';document.getElementById('berkeOverlay').classList.add('active');}
+function closeBerke(){document.getElementById('berkeOverlay').classList.remove('active');document.getElementById('berkeFrame').src='';}
+function openUnite(){document.getElementById('uniteFrame').src='unite.html';document.getElementById('uniteOverlay').classList.add('active');}
+function closeUnite(){document.getElementById('uniteOverlay').classList.remove('active');document.getElementById('uniteFrame').src='';}
 
 // ===== INIT =====
 async function init(){
-  dlog('init başladı');
   const ok=await loadWords();
-  dlog('loadWords sonuç: '+ok);
-  if(!ok){ dlog('Kelimeler yüklenemedi, durdu'); return; }
+  if(!ok) return;
   trackVisit().catch(()=>{});
-  
-  const forceTimer=setTimeout(()=>{
-    dlog('5sn TIMEOUT — login ekranına zorla geçiş');
-    if(!document.getElementById('home').classList.contains('active')){
-      showScreen('login');
-    }
-  },5000);
-  
   try{
-    dlog('tryAutoLogin başlıyor...');
     const autoOk=await tryAutoLogin();
-    clearTimeout(forceTimer);
-    dlog('tryAutoLogin sonuç: '+autoOk);
-    if(!autoOk){ dlog('showScreen(login) çağrılıyor'); showScreen('login'); }
+    if(!autoOk) showScreen('login');
   }catch(e){
-    clearTimeout(forceTimer);
-    dlog('init catch: '+e.message);
     showScreen('login');
   }
-  dlog('init tamamlandı');
 }
 init();
 </script>
