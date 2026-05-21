@@ -176,6 +176,7 @@ body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2
   <div class="load-spinner"></div>
   <div class="load-text">Kelimeler yükleniyor...</div>
   <div class="load-count" id="loadCount"></div>
+  <div id="debugLog" style="margin-top:20px;text-align:left;font-size:11px;color:var(--text-dim);max-width:340px;word-break:break-all;"></div>
 </div>
 
 <!-- LOGIN -->
@@ -313,6 +314,13 @@ firebase.initializeApp({
 });
 const db=firebase.database();
 
+// DEBUG LOG
+function dlog(msg){
+  const el=document.getElementById('debugLog');
+  if(el) el.innerHTML+=new Date().toLocaleTimeString()+' → '+msg+'<br>';
+  console.log('DEBUG:',msg);
+}
+
 // ===== VISITOR COUNTER =====
 async function trackVisit(){
   try{
@@ -339,9 +347,13 @@ let WORDS=[];
 async function loadWords(){
   const loadCount=document.getElementById('loadCount');
   loadCount.textContent='Kelimeler çekiliyor...';
+  dlog('loadWords başladı');
   try{
+    dlog('fetch başlıyor: '+SCRIPT_URL);
     const resp=await fetch(SCRIPT_URL+'?key='+SCRIPT_KEY);
+    dlog('fetch tamamlandı, status: '+resp.status);
     const data=await resp.json();
+    dlog('JSON parse OK, satır sayısı: '+data.length);
     if(data.error) throw new Error(data.error);
     const words=[];
     data.forEach((w,i)=>{
@@ -354,14 +366,16 @@ async function loadWords(){
       WORDS=words;
       localStorage.setItem('nihongo_words_cache',JSON.stringify(WORDS));
       loadCount.textContent=WORDS.length+' kelime yüklendi ✓';
+      dlog('loadWords OK: '+WORDS.length+' kelime');
       return true;
     } else throw new Error('Kelime bulunamadı');
   }catch(e){
-    console.error(e);
+    dlog('loadWords HATA: '+e.message);
     const cached=localStorage.getItem('nihongo_words_cache');
     if(cached){
       WORDS=JSON.parse(cached);
       loadCount.textContent=WORDS.length+' kelime (önbellekten) ✓';
+      dlog('Cache kullanıldı: '+WORDS.length);
       return true;
     }
     loadCount.innerHTML='Yüklenemedi!<br><span style="font-size:12px;color:var(--red)">'+e.message+'</span>';
@@ -390,20 +404,27 @@ async function doLogin(){
   const safeUser=user.replace(/[.#$\[\]\/]/g,'_');
   const pinHash=hashPin(pin);
   try{
+    dlog('Firebase read: users/'+safeUser+'/profile');
     const snap=await db.ref('users/'+safeUser+'/profile').once('value');
+    dlog('Firebase read OK, exists='+snap.exists());
     if(snap.exists()){
-      if(snap.val().pin!==pinHash){errEl.textContent='PIN yanlış.';btn.disabled=false;btn.textContent='Giriş / Kayıt';return;}
+      if(snap.val().pin!==pinHash){dlog('PIN eşleşmedi');errEl.textContent='PIN yanlış.';btn.disabled=false;btn.textContent='Giriş / Kayıt';return;}
     }else{
+      dlog('Yeni kullanıcı oluşturuluyor...');
       await db.ref('users/'+safeUser+'/profile').set({pin:pinHash,created:Date.now()});
+      dlog('Kullanıcı oluşturuldu');
     }
     currentUser={name:safeUser};
-    trackLogin();
+    trackLogin().catch(()=>{});
     localStorage.setItem('nihongo_user',safeUser);
     localStorage.setItem('nihongo_pin',pin);
     btn.disabled=false;btn.textContent='Giriş / Kayıt';
+    dlog('loadUserStats başlıyor...');
     await loadUserStats();
+    dlog('loadUserStats tamamlandı');
     enterHome();
-  }catch(e){errEl.textContent='Bağlantı hatası.';btn.disabled=false;btn.textContent='Giriş / Kayıt';}
+    dlog('enterHome çağrıldı');
+  }catch(e){dlog('doLogin catch: '+e.message);errEl.textContent='Bağlantı hatası.';btn.disabled=false;btn.textContent='Giriş / Kayıt';}
 }
 
 function doLogout(){
@@ -415,9 +436,14 @@ function doLogout(){
 
 async function tryAutoLogin(){
   const u=localStorage.getItem('nihongo_user'),p=localStorage.getItem('nihongo_pin');
-  if(!u||!p) return false;
+  dlog('tryAutoLogin: user='+u+' pin='+(p?'***':'yok'));
+  if(!u||!p){ dlog('Kayıtlı kullanıcı yok'); return false; }
   document.getElementById('inpUser').value=u;document.getElementById('inpPin').value=p;
-  try{ await doLogin(); }catch(e){ console.error(e); }
+  try{ 
+    dlog('doLogin çağrılıyor...');
+    await doLogin(); 
+    dlog('doLogin tamamlandı, currentUser='+(currentUser?currentUser.name:'null'));
+  }catch(e){ dlog('doLogin HATA: '+e.message); }
   return !!currentUser;
 }
 
@@ -599,26 +625,31 @@ function closeUnite(){
 
 // ===== INIT =====
 async function init(){
+  dlog('init başladı');
   const ok=await loadWords();
-  if(!ok) return;
+  dlog('loadWords sonuç: '+ok);
+  if(!ok){ dlog('Kelimeler yüklenemedi, durdu'); return; }
   trackVisit().catch(()=>{});
   
-  // 5 saniye içinde giriş olmazsa login ekranına zorla geç
   const forceTimer=setTimeout(()=>{
+    dlog('5sn TIMEOUT — login ekranına zorla geçiş');
     if(!document.getElementById('home').classList.contains('active')){
       showScreen('login');
     }
   },5000);
   
   try{
+    dlog('tryAutoLogin başlıyor...');
     const autoOk=await tryAutoLogin();
     clearTimeout(forceTimer);
-    if(!autoOk) showScreen('login');
+    dlog('tryAutoLogin sonuç: '+autoOk);
+    if(!autoOk){ dlog('showScreen(login) çağrılıyor'); showScreen('login'); }
   }catch(e){
     clearTimeout(forceTimer);
-    console.error(e);
+    dlog('init catch: '+e.message);
     showScreen('login');
   }
+  dlog('init tamamlandı');
 }
 init();
 </script>
