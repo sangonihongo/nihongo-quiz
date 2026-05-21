@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f172a">
+<title>Üniteler — Japonca Flash Card</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+:root{--bg:#1a1a2e;--surface:#16213e;--card:#1f2b47;--card-hover:#253350;--accent:#e94560;--accent2:#0f3460;--gold:#f5c518;--green:#00c853;--red:#ff1744;--text:#eaeaea;--text-dim:#8899aa;--text-dark:#556677;--border:#2a3a5c;--radius:16px}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Quicksand','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text)}
+body{display:flex;flex-direction:column;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)}
+.scroll-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.screen{display:none;min-height:100%;padding:20px 16px 40px}
+.screen.active{display:flex;flex-direction:column}
+
+/* LOADING */
+#loading{align-items:center;justify-content:center;gap:16px;text-align:center}
+.load-spinner{width:48px;height:48px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-text{font-size:14px;color:var(--text-dim)}
+
+/* DIRECTION SELECT */
+#dirSelect{align-items:center;justify-content:center;gap:24px;text-align:center}
+.dir-title{font-size:22px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.dir-grid{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px}
+.dir-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:all .2s}
+.dir-btn:active{transform:scale(0.97);background:var(--card-hover)}
+.dir-btn .dir-icon{font-size:28px;margin-bottom:6px}
+.dir-btn .dir-label{font-size:16px;font-weight:700}
+.dir-btn .dir-desc{font-size:11px;color:var(--text-dim);margin-top:4px}
+.back-link{background:none;border:none;color:var(--text-dim);font-size:14px;cursor:pointer;font-family:inherit;padding:8px}
+
+/* UNIT SELECT */
+#unitSelect{align-items:center;gap:20px;padding-top:16px}
+.unit-title{font-size:18px;font-weight:700;text-align:center}
+.unit-grid{display:flex;flex-direction:column;gap:10px;width:100%;max-width:340px}
+.unit-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center}
+.unit-btn:active{transform:scale(0.97);background:var(--card-hover)}
+.unit-btn .unit-name{font-size:15px;font-weight:700}
+.unit-btn .unit-count{font-size:12px;color:var(--text-dim);background:var(--accent2);padding:4px 10px;border-radius:10px}
+
+/* QUIZ */
+#quiz{align-items:center;gap:16px}
+.quiz-top{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:380px}
+.quiz-back{background:none;border:none;color:var(--text-dim);font-size:22px;cursor:pointer;padding:4px 8px}
+.quiz-info{font-size:13px;color:var(--text-dim);font-weight:600}
+.quiz-pts{font-size:13px;color:var(--gold);font-weight:700}
+.progress-track{height:6px;background:var(--card);border-radius:3px;overflow:hidden;width:100%;max-width:380px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:3px;transition:width .4s ease}
+
+/* TIMER */
+.timer-row{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--text-dim)}
+.timer-val{font-size:18px;font-weight:700;color:var(--red);min-width:36px;text-align:center}
+
+/* FLIP CARD */
+.card-container{width:100%;max-width:340px;height:240px;perspective:1000px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.card-inner{position:relative;width:100%;height:100%;transition:transform 0.5s;transform-style:preserve-3d}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.card-front{background:linear-gradient(135deg,var(--card),var(--accent2))}
+.card-back{background:linear-gradient(135deg,var(--accent2),#1a3a6a);transform:rotateY(180deg)}
+.card-main{font-size:36px;font-weight:700;line-height:1.3;text-align:center}
+.card-main.jp-text{font-family:'Noto Sans JP',sans-serif;font-size:44px}
+.card-sub{font-size:16px;color:var(--text-dim);margin-top:8px;font-weight:500}
+.card-hint{font-size:12px;color:var(--text-dark);margin-top:16px}
+
+/* ANSWER BUTTONS */
+.answer-row{display:flex;gap:14px;width:100%;max-width:340px}
+.answer-row button{flex:1;padding:16px;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+.answer-row button:active{transform:scale(0.97)}
+.btn-didnt{background:var(--card);color:var(--red);border:2px solid var(--red)!important}
+.btn-knew{background:var(--green);color:#fff}
+.answer-row.hidden{visibility:hidden}
+
+/* RESULT */
+#result{align-items:center;justify-content:center;gap:20px;text-align:center}
+.result-circle{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:36px;font-weight:700;border:4px solid}
+.result-circle.great{border-color:var(--green);color:var(--green);background:rgba(0,200,83,0.08)}
+.result-circle.ok{border-color:var(--gold);color:var(--gold);background:rgba(245,197,24,0.08)}
+.result-circle.bad{border-color:var(--red);color:var(--red);background:rgba(255,23,68,0.08)}
+.result-circle small{font-size:12px;color:var(--text-dim);font-weight:600}
+.result-msg{font-size:20px;font-weight:700}
+.result-detail{font-size:13px;color:var(--text-dim)}
+.result-actions{display:flex;gap:12px;width:100%;max-width:340px}
+.result-actions button{flex:1;padding:14px;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+.result-actions button:active{transform:scale(0.97)}
+.btn-retry{background:var(--accent);color:#fff}
+.btn-home{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
+</style>
+</head>
+<body>
+<div class="scroll-wrap">
+
+<!-- LOADING -->
+<div id="loading" class="screen active">
+  <div class="load-spinner"></div>
+  <div class="load-text" id="loadText">Üniteler yükleniyor...</div>
+</div>
+
+<!-- DIRECTION SELECT -->
+<div id="dirSelect" class="screen">
+  <div class="dir-title">📚 Üniteler</div>
+  <div class="dir-grid">
+    <div class="dir-btn" onclick="selectDir('tr2jp')">
+      <div class="dir-icon">🇹🇷 → 🇯🇵</div>
+      <div class="dir-label">Türkçe → Japonca</div>
+      <div class="dir-desc">Türkçe görürsün, Japonca + Romaji cevap</div>
+    </div>
+    <div class="dir-btn" onclick="selectDir('jp2tr')">
+      <div class="dir-icon">🇯🇵 → 🇹🇷</div>
+      <div class="dir-label">Japonca → Türkçe</div>
+      <div class="dir-desc">Japonca + Romaji görürsün, Türkçe cevap</div>
+    </div>
+  </div>
+</div>
+
+<!-- UNIT SELECT -->
+<div id="unitSelect" class="screen">
+  <div class="unit-title" id="unitTitle">Ünite Seç</div>
+  <div class="unit-grid" id="unitGrid"></div>
+  <button class="back-link" onclick="showScreen('dirSelect')">← Geri</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="screen">
+  <div class="quiz-top">
+    <button class="quiz-back" onclick="quitQuiz()">✕</button>
+    <span class="quiz-info" id="qInfo">1 / 20</span>
+    <span class="quiz-pts" id="qPts">0 puan</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+  <div class="timer-row">⏱ <span class="timer-val" id="timerVal">0</span> sn</div>
+  <div class="card-container" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+      <div class="card-front" id="cardFront"></div>
+      <div class="card-back" id="cardBack"></div>
+    </div>
+  </div>
+  <div class="answer-row hidden" id="answerRow">
+    <button class="btn-didnt" onclick="answer(false)">✗ Bilmedim</button>
+    <button class="btn-knew" onclick="answer(true)">✓ Bildim</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result" class="screen">
+  <div class="result-circle" id="resultCircle"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-detail" id="resultDetail"></div>
+  <div class="result-actions">
+    <button class="btn-home" onclick="showScreen('dirSelect')">Ana Menü</button>
+    <button class="btn-retry" onclick="startQuiz(lastUnit)">Tekrar Oyna</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbz4NH6cLngnYhe74t13jvUlFS9Bi72I4nGfPx09ak3f6MJPe7_-pz-oAzUwRv4Vr77U4g/exec';
+const SCRIPT_KEY='sango2026gizli';
+
+let UNITS={};
+let currentDir='', currentWords=[], pos=0, totalPts=0, cardFlipped=false;
+let timerInterval=null, timerSec=0, lastUnit='';
+
+// LOAD DATA
+async function loadData(){
+  const lt=document.getElementById('loadText');
+  try{
+    const resp=await fetch(SCRIPT_URL+'?key='+SCRIPT_KEY+'&sheet=2');
+    const data=await resp.json();
+    if(data.error) throw new Error(data.error);
+    UNITS={};
+    data.forEach(w=>{
+      const unit=(w.dt||'').toString().trim();
+      const jp=(w.jp||'').toString().trim();
+      const rm=(w.rm||'').toString().trim();
+      const tr=(w.tr||'').toString().trim();
+      if(unit&&jp&&rm&&tr){
+        if(!UNITS[unit]) UNITS[unit]=[];
+        UNITS[unit].push({jp,rm,tr});
+      }
+    });
+    const total=Object.values(UNITS).reduce((s,a)=>s+a.length,0);
+    if(total>0){
+      localStorage.setItem('unite_cache',JSON.stringify(UNITS));
+      lt.textContent=total+' kelime yüklendi ✓';
+      setTimeout(()=>showScreen('dirSelect'),600);
+    } else throw new Error('Kelime bulunamadı');
+  }catch(e){
+    console.error(e);
+    const cached=localStorage.getItem('unite_cache');
+    if(cached){
+      UNITS=JSON.parse(cached);
+      lt.textContent='Önbellekten yüklendi ✓';
+      setTimeout(()=>showScreen('dirSelect'),600);
+    } else {
+      lt.textContent='Yüklenemedi!';
+    }
+  }
+}
+
+// NAVIGATION
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector('.scroll-wrap').scrollTop=0;
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+}
+
+// DIRECTION
+function selectDir(dir){
+  currentDir=dir;
+  const title=dir==='tr2jp'?'🇹🇷→🇯🇵 Ünite Seç':'🇯🇵→🇹🇷 Ünite Seç';
+  document.getElementById('unitTitle').textContent=title;
+  buildUnitList();
+  showScreen('unitSelect');
+}
+
+// UNIT LIST
+function buildUnitList(){
+  const grid=document.getElementById('unitGrid');
+  const unitNames=Object.keys(UNITS);
+  grid.innerHTML=unitNames.map(u=>{
+    const cnt=UNITS[u].length;
+    return `<div class="unit-btn" onclick="startQuiz('${u.replace(/'/g,"\\'")}')"><span class="unit-name">${u}</span><span class="unit-count">${cnt} kelime</span></div>`;
+  }).join('');
+}
+
+// SHUFFLE
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// START QUIZ
+function startQuiz(unitName){
+  lastUnit=unitName;
+  currentWords=shuffle(UNITS[unitName]||[]);
+  pos=0;totalPts=0;cardFlipped=false;
+  showScreen('quiz');
+  renderCard();
+}
+
+// RENDER CARD
+function renderCard(){
+  if(pos>=currentWords.length){endQuiz();return;}
+  const w=currentWords[pos];
+  cardFlipped=false;
+  document.getElementById('cardInner').classList.remove('flipped');
+  document.getElementById('answerRow').classList.add('hidden');
+  document.getElementById('qInfo').textContent=(pos+1)+' / '+currentWords.length;
+  document.getElementById('qPts').textContent=totalPts+' puan';
+  document.getElementById('progressBar').style.width=((pos/currentWords.length)*100)+'%';
+
+  const front=document.getElementById('cardFront');
+  const back=document.getElementById('cardBack');
+
+  if(currentDir==='tr2jp'){
+    front.innerHTML=`<div class="card-main">${w.tr}</div><div class="card-hint">Kartı çevirmek için dokun</div>`;
+    back.innerHTML=`<div class="card-main jp-text">${w.jp}</div><div class="card-sub">${w.rm}</div>`;
+  } else {
+    front.innerHTML=`<div class="card-main jp-text">${w.jp}</div><div class="card-sub">${w.rm}</div><div class="card-hint">Kartı çevirmek için dokun</div>`;
+    back.innerHTML=`<div class="card-main">${w.tr}</div>`;
+  }
+
+  // Start timer
+  timerSec=0;
+  document.getElementById('timerVal').textContent='0';
+  if(timerInterval) clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    timerSec++;
+    document.getElementById('timerVal').textContent=timerSec;
+  },1000);
+}
+
+// FLIP
+function flipCard(){
+  if(cardFlipped) return;
+  cardFlipped=true;
+  document.getElementById('cardInner').classList.add('flipped');
+  document.getElementById('answerRow').classList.remove('hidden');
+  // Stop timer
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+}
+
+// ANSWER
+function answer(knew){
+  if(knew){
+    const pts=Math.max(0, 5-timerSec);
+    totalPts+=pts;
+  }
+  document.getElementById('qPts').textContent=totalPts+' puan';
+  pos++;
+  setTimeout(renderCard,300);
+}
+
+// END QUIZ
+function endQuiz(){
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+  const maxPts=currentWords.length*5;
+  const pct=maxPts>0?Math.round(totalPts/maxPts*100):0;
+
+  const circle=document.getElementById('resultCircle');
+  const cls=pct>=70?'great':pct>=40?'ok':'bad';
+  circle.className='result-circle '+cls;
+  circle.innerHTML=totalPts+'<small>/ '+maxPts+' puan</small>';
+
+  document.getElementById('resultMsg').textContent=
+    pct>=80?'素晴らしい！ Mükemmel!':pct>=60?'よくできた！ Güzel!':pct>=40?'まあまあ Fena değil':'がんばって！ Tekrar dene!';
+  document.getElementById('resultDetail').textContent=
+    currentWords.length+' kart · '+totalPts+' puan · %'+pct+' başarı';
+
+  showScreen('result');
+}
+
+function quitQuiz(){
+  if(confirm('Çıkmak istediğinize emin misiniz?')) showScreen('unitSelect');
+}
+
+// INIT
+loadData();
+</script>
+</body>
+</html>
