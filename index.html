@@ -602,10 +602,20 @@ async function init(){
   const ok=await loadWords();
   if(!ok) return;
   trackVisit().catch(()=>{});
+  
+  // 5 saniye içinde giriş olmazsa login ekranına zorla geç
+  const forceTimer=setTimeout(()=>{
+    if(!document.getElementById('home').classList.contains('active')){
+      showScreen('login');
+    }
+  },5000);
+  
   try{
     const autoOk=await tryAutoLogin();
+    clearTimeout(forceTimer);
     if(!autoOk) showScreen('login');
   }catch(e){
+    clearTimeout(forceTimer);
     console.error(e);
     showScreen('login');
   }
