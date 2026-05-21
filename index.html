@@ -417,7 +417,7 @@ async function tryAutoLogin(){
   const u=localStorage.getItem('nihongo_user'),p=localStorage.getItem('nihongo_pin');
   if(!u||!p) return false;
   document.getElementById('inpUser').value=u;document.getElementById('inpPin').value=p;
-  await doLogin();
+  try{ await doLogin(); }catch(e){ console.error(e); }
   return !!currentUser;
 }
 
@@ -601,11 +601,14 @@ function closeUnite(){
 async function init(){
   const ok=await loadWords();
   if(!ok) return;
-  trackVisit();
-  setTimeout(async()=>{
+  trackVisit().catch(()=>{});
+  try{
     const autoOk=await tryAutoLogin();
     if(!autoOk) showScreen('login');
-  },800);
+  }catch(e){
+    console.error(e);
+    showScreen('login');
+  }
 }
 init();
 </script>
